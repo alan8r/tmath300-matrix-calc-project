@@ -1,7 +1,7 @@
 /*
     Matrix.js 
     Class to represent and hold the information about a matrix
-    Authors: Alan Thompson, 
+    Authors: Alan Thompson, Lwazi, Michael Mapanao
 */
 
 class Matrix {
@@ -116,7 +116,41 @@ class Matrix {
     }
     return result
   }
-    
+
+  multiply(matrix1, matrix2){
+
+    var row1 = matrix1.length;
+
+    var columns1 = matrix1[0].length;
+
+    var row2 = matrix2.length;
+
+    var columns2 = matrix2[0].length;
+
+    var result = new Array(row1,row2);
+
+    var summation = 0;
+
+    for(var i = 0; r < row1; i++) {
+
+      for (var j = 0; j < columns2; j++) {
+
+        for (var k = 0; k < columns1; k++ ) {
+
+          summation = summation + matrix1[i][k] * matrix2[k][j];
+      }
+
+      result[i][j] = summation;
+
+      summation = 0
+
+    }
+
+  }
+    return result;
+
+}
+
 
   isSquare() {
     return (this.rows == this.cols)
