@@ -1,6 +1,7 @@
 /*
     Matrix.js 
     Class to represent and hold the information about a matrix
+    Authors: Alan Thompson, 
 */
 
 class Matrix {
@@ -12,8 +13,10 @@ class Matrix {
     this.array = [];
     for (let j=0; j<cols; j++) {
       this.array.push([])
-      for (let i=0; i<rows; i++)
+      for (let i=0; i<rows; i++) {
         this.array[j].push(j*rows+i)
+        
+      }
     }
     this.DOM_init();
   }
@@ -44,4 +47,14 @@ class Matrix {
   sizeCols() {
     return this.cols
   }
+
+  matrixAdd(matrix) {
+    // add this to matrix 
+  }
+
+  matrixSubtract(matrix) {
+    // subtract this from matrix
+  }
+
+
 }
