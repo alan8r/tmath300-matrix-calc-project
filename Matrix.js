@@ -1,7 +1,7 @@
 /*
     Matrix.js 
     Class to represent and hold the information about a matrix
-    Authors: Alan Thompson, 
+    Authors: Alan Thompson, Lwazi
 */
 
 class Matrix {
