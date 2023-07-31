@@ -99,28 +99,15 @@ function addMatrix(matrix, parentDivID, newTableID) {
       
       input.value = matrix.array[i][j]
       
-      // input key validator to stop alpha chars and other weird characters from being put into the input fields
-      input.onkeydown = function(e) {
-        let isValid = e.code.includes("Digit") || e.code.includes("Arrow") || e.code === "Backspace" || e.code === "Period"
-        if (!isValid) alert("Can only enter digits 1-9, decimal points, backspace and Arrow keys")
-        return isValid 
-      }
-
-      // fires after you "click out" of the input field. validates situations not handled by the above check
+      // validate the input after user "clicks out" of input field, if valid then update the Matrix object
       input.onchange = function() {
-        let iv = input.value
-        if (iv.length < 1) {
-          input.value = matrix.array[j][i]
-          alert("Can't input nothing. Field reset to previous value.")
-        } else if (iv.substring(iv.indexOf('.')+1).includes('.')) {
-          input.value = matrix.array[j][i]
-          alert("Can't enter more than two decimal points. Field reset to previous value.")
-        } else if (iv[iv.length-1] === '.') {
-          input.value = matrix.array[j][i]
-          alert("Decimal point must contain something after it. Field reset to previous value.")
+        
+        if (isNaN(Number(input.value))) {
+          input.value = matrix.array[i][j]
+          alert("ERROR: Invalid input! Matrix can only hold numbers.")
         } else {
-          // updates the actual matrix.array values to match whats been entered in the 'input' field if all the validation passes
-          matrix.array[j][i] = iv
+          input.value = Number(input.value)
+          matrix.array[i][j] = Number(input.value)
           console.log("Matrix changed:")
           console.log(matrix.toString())
         }
