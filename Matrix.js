@@ -5,10 +5,12 @@
 */
 
 class Matrix {
-  
+
   constructor(rows, cols) {
     this.rows = rows
     this.cols = cols
+
+    this.tableDOM = null
     
     this.array = [];
     for (let j=0; j<cols; j++) {
@@ -18,19 +20,7 @@ class Matrix {
         
       }
     }
-    this.DOM_init();
   }
-
-  DOM_init() {
-    this.DOM_outerDiv = document.createElement('div');
-    this.DOM_table = document.createElement('table');
-    this.DOM_inputs = [];
-    for (let j=0; j<this.cols; j++) {
-      this.DOM_inputs.push([]);
-      for (let i = 0; i<this.rows; i++)
-        this.DOM_inputs[j].push(document.createElement('input'));
-    }
-  }  
 
   getElemAt(indexRow, indexCol) {
     return this.array[indexCol-1][indexRow-1]
