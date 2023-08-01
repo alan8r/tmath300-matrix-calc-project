@@ -71,6 +71,7 @@ class Matrix {
     return returnMatrix
   }
 
+  
   multiply(matrix) {
     // multiply this with matrix (crossproduct)
     
