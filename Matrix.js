@@ -71,6 +71,7 @@ class Matrix {
     return returnMatrix
   }
 
+  
   multiply(matrix) {
     // multiply this with matrix (crossproduct)
     
@@ -175,8 +176,17 @@ class Matrix {
     //return the rank of the matrix
   }
 
-  nullSpace() {
-    //return the nullspace of the matrix
+  nullSpace(matrix) {
+    const numeric = require('numeric');
+
+    const rowEchelonForm = numeric.transpose(numeric.rref(matrix));
+
+    const rowSpace = numeric.transpose(rowEchelonForm).map(row => numeric.div(row, numeric.norm2(row)));
+
+    const nullSpace = rowSpace.filter(row => numeric.norm2(row) === 0);
+
+    return nullSpace;
+    
   }
 
   toString() {
