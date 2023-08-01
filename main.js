@@ -7,12 +7,14 @@ let test; // test array
 
 let matrix1, matrix2;
 
+let matrixTest1, matrixTest2;
+
 function main() {
   
   test = new Matrix(3, 5)
   
-  console.log(`Rows: ${test.sizeRows()}\nCols: ${test.sizeCols()}`)
-  console.log(`Is square?: ${test.isSquare()}`)
+  // console.log(`Rows: ${test.sizeRows()}\nCols: ${test.sizeCols()}`)
+  // console.log(`Is square?: ${test.isSquare()}`)
 
   matrix1 = new Matrix(3,3);
 
@@ -26,13 +28,18 @@ function main() {
   let matrix4 = matrix1.subtract(matrix2);
   console.log(matrix4.toString())
 
-  let transposeTest = new Matrix(3, 2)
+  let transposeTest = new Matrix(3, 2, 'asc')
 
+  console.log(transposeTest.toString())
   console.log(transposeTest.transpose().toString())
 
-  addMatrix(matrix1, "main_container", "table1")
-
-
+  matrixTest1 = new Matrix(2, 3, 'asc')
+  matrixTest2 = new Matrix(2, 3, 'asc')
+  
+  let matrixTestTable1 = new MatrixTable(matrixTest1, 'main_container'),
+      matrixTestTable2 = new MatrixTable(matrixTest2, 'main_container')
+  
+  matrixTest1.test('BEEP')
   // TODO: FIX MATRIX MULTIPLY STUFF
   /*
   let matrixMult1 = new Matrix(1, 2),
@@ -45,7 +52,8 @@ function main() {
   */
 }
 
-function addMatrix(matrix, parentDivID, newTableID) {
+/*
+function addMatrix(matrix, parentDivID, newTableID='') {
   let rows = matrix.sizeRows(),
       cols = matrix.sizeCols()
 
@@ -57,33 +65,64 @@ function addMatrix(matrix, parentDivID, newTableID) {
     // extra run of loop to add the buttons to the table
     if (i>=rows) {
       // create all the needed html DOM elements
-      let trExtra = document.createElement('tr'),
-          tdAddRow = document.createElement('td'),
-          tdAddCol = document.createElement('td'),
-          tdAddBoth = document.createElement('td'),
-          buttonAddRow = document.createElement('button'),
-          buttonAddCol = document.createElement('button'),
-          buttonAddBoth = document.createElement('button')
+      let trTop = document.createElement('tr'),
+          tdTop = document.createElement('td'),
+          inputRows = document.createElement('input'),
+          inputCols = document.createElement('input')
+          
       
       // set up the DOM elements properties before appending them
-      buttonAddRow.innerText = '+'
-      buttonAddCol.innerText = '+'
-      buttonAddBoth.innerText = '+'
-      buttonAddRow.disabled = true
-      buttonAddCol.disabled = true
-      buttonAddBoth.disabled = true
-      tdAddRow.colSpan = 3
-      tdAddRow.style.textAlign = "center"
-      tdAddCol.rowSpan = 3
+      tdTop.innerHTML = 'Rows/Cols:<br />'
+      inputRows.className = 'matrixSize'
+      inputCols.className = 'matrixSize'
+      inputRows.value = matrix.rows
+      inputCols.value = matrix.cols
+      tdTop.colSpan = matrix.cols
+      tdTop.className = 'topExtra'
+      tdTop.appendChild(inputRows)
+      inputRows.after(' x ')
+      tdTop.appendChild(inputCols)
+      trTop.appendChild(tdTop)
+      table.children[0].before(trTop)
+          
+      let storeOldValue = function() {
+        this.oldValue = this.value
+      }
 
-      // append all the DOM elements to their appropriate parent element
-      tdAddRow.appendChild(buttonAddRow)
-      tdAddCol.appendChild(buttonAddCol)
-      tdAddBoth.appendChild(buttonAddBoth)
-      table.children[0].appendChild(tdAddCol)
-      trExtra.appendChild(tdAddRow)
-      trExtra.appendChild(tdAddBoth)
-      table.appendChild(trExtra)
+      let changeRow = function() {
+        if (isNaN(Number(this.value)) || this.value < 1) {
+          this.value = this.oldValue
+          alert("ERROR: Invalid input! Dimension must be a non-zero integer.");
+        } else {
+
+          let newRows = Math.floor(this.value)
+
+          let newMatrix = new Matrix(newRows, matrix.cols)
+          newMatrix.add(matrix)
+          matrix = newMatrix
+          addMatrix(matrix, parentDivID, newTableID)
+          let parentDiv = document.getElementById(parentDivID)
+          parentDiv.getElementsByTagName('table')[0].remove()
+
+          console.log('row count changed to',this.value)
+        }
+      }
+
+      let changeCol = function() {
+        if (isNaN(Number(this.value))) {
+          this.value = this.oldValue
+          alert("ERROR: Invalid input! Dimension must be a non-zero integer.");
+        } else {
+
+        }
+      }
+
+      inputRows.onfocus = inputCols.onfocus = storeOldValue
+      inputRows.onchange = changeRow
+      inputCols.onchange = changeCol
+
+      // used to disable buttons until click handlers are finished
+      
       
       // used so I dont have to wrap everything after the 'if' clause in an 'else'
       continue
@@ -97,17 +136,17 @@ function addMatrix(matrix, parentDivID, newTableID) {
       let td = document.createElement('td'),
           input = document.createElement('input')
       
-      input.value = matrix.array[i][j]
+      input.value = matrix.array[j][i]
       
       // validate the input after user "clicks out" of input field, if valid then update the Matrix object
       input.onchange = function() {
         
         if (isNaN(Number(input.value))) {
-          input.value = matrix.array[i][j]
+          input.value = matrix.array[j][i]
           alert("ERROR: Invalid input! Matrix can only hold numbers.")
         } else {
           input.value = Number(input.value)
-          matrix.array[i][j] = Number(input.value)
+          matrix.array[j][i] = Number(input.value)
           console.log("Matrix changed:")
           console.log(matrix.toString())
         }
@@ -120,7 +159,7 @@ function addMatrix(matrix, parentDivID, newTableID) {
 
     table.appendChild(tr)
     document.getElementById(parentDivID).appendChild(table)
-  
+    
   }
-  
 }
+*/

@@ -6,7 +6,7 @@
 
 class Matrix {
 
-  constructor(rows, cols) {
+  constructor(rows, cols, mode='default') {
     this.rows = rows
     this.cols = cols
 
@@ -16,18 +16,21 @@ class Matrix {
     for (let j=0; j<cols; j++) {
       this.array.push([])
       for (let i=0; i<rows; i++) {
-        this.array[j].push(j*rows+i)
         
+        let arrElement = 0;   // default
+
+        if (mode.toLowerCase()==='asc') 
+          arrElement = j*rows+i
+        else if (mode.toLowerCase()==='desc') 
+          arrElement = (rows*cols) - (j*rows+i) - 1
+        
+        this.array[j].push(arrElement)
       }
     }
   }
 
   getElemAt(indexRow, indexCol) {
     return this.array[indexCol-1][indexRow-1]
-  }
-
-  DOM_update() {
-    // update the actual html matrix 
   }
 
   sizeRows() {
@@ -44,6 +47,8 @@ class Matrix {
       return
     }
     let returnMatrix=new Matrix(this.rows, this.cols)
+    
+    returnMatrix.tableDOM = this.tableDOM
     for (let j=0; j<this.cols; j++) {
       for (let i=0; i<this.rows; i++) {
         returnMatrix.array[j][i] = this.array[j][i] + matrix.array[j][i]
@@ -149,6 +154,7 @@ class Matrix {
   transpose() {
     // return transposed matrix ("right rotation, flip on vertical axis")
     let result = new Matrix(this.cols, this.rows)
+    result.tableDOM = this.tableDOM
     result.array = this.array[0].map((col, c) => this.array.map((row, r) => this.array[r][c]))
     return result
   }
@@ -174,12 +180,15 @@ class Matrix {
   }
 
   toString() {
-    //return this.array.toString();
     let sb = "";
     for (let j=0; j<this.cols; j++) {
       sb += this.array[j].toString().split(',').join('\t')
       sb += '\n'
     }
     return sb;
+  }
+
+  test = (msg) => {
+    console.log(msg)
   }
 }
