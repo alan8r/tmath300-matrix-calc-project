@@ -38,8 +38,7 @@ function main() {
   
   let matrixTestTable1 = new MatrixTable(matrixTest1, 'main_container'),
       matrixTestTable2 = new MatrixTable(matrixTest2, 'main_container')
-  
-  matrixTest1.test('BEEP')
+
   // TODO: FIX MATRIX MULTIPLY STUFF
   /*
   let matrixMult1 = new Matrix(1, 2),
