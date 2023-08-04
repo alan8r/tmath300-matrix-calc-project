@@ -1,7 +1,6 @@
 class MatrixTable {
     constructor(matrix, parentId) {
         this.matrix = matrix
-        matrix.tableDOM = this
         this.table = document.createElement('table')
         document.getElementById(parentId).appendChild(this.table)
         this.generateTableInnerStructure()
@@ -11,6 +10,7 @@ class MatrixTable {
     generateTableInnerStructure() {
         if (this.table.children.length >= 1)
             this.table.children[0].remove()
+
         let tableBody = document.createElement('tbody')
 
         for (let r = 0; r < this.matrix.rows; r++) {
@@ -18,6 +18,14 @@ class MatrixTable {
             for (let c = 0; c < this.matrix.cols; c++) {
                 let td = document.createElement('td'),
                     input = document.createElement('input')
+                    
+                td.style.width = DEFAULTS.cellWidth + 'px'
+                td.style.height = DEFAULTS.cellHeight + 'px'
+                // td.style.padding = DEFAULTS.cellPadding + 'px'
+                td.style.margin = DEFAULTS.cellPadding + 'px'
+                input.style.width = (DEFAULTS.cellWidth) + 'px'
+                input.style.height = (DEFAULTS.cellHeight) + 'px'
+
                 td.appendChild(input)
                 tr.appendChild(td)
             }
@@ -37,4 +45,6 @@ class MatrixTable {
         this.generateTableInnerStructure()
         this.updateInputFields()
     }
+
+    
 }

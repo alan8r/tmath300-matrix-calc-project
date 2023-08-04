@@ -1,165 +1,98 @@
 /*
     main.js
-    Main codefile/entrypoint. App starts running from here.
+    Main codefile/entrypoint. App effectively starts running from here.
 */
 
-let test; // test array
+const DEFAULTS = {
+  rows: 3,
+  cols: 3,
+  cellWidth: 50,
+  cellHeight: 50,
+  cellPadding: 0
+}
 
-let matrix1, matrix2;
-
-let matrixTest1, matrixTest2;
+let matrices = [],
+    matrixControls = [];
 
 function main() {
-  
-  test = new Matrix(3, 5)
-  
-  // console.log(`Rows: ${test.sizeRows()}\nCols: ${test.sizeCols()}`)
-  // console.log(`Is square?: ${test.isSquare()}`)
 
-  matrix1 = new Matrix(3,3);
+  // generate and append the initial matrix to our matrices collection
+  defaultMatrix = new Matrix(DEFAULTS.rows, DEFAULTS.cols+1, 'asc')
+  matrices.push(defaultMatrix)
+  defaultMatrix.generateMatrixTable('main_container')
 
-  matrix2 = new Matrix(3,3);
+  secondMatrix = new Matrix(4,3,'asc')
+  matrices.push(secondMatrix)
+  secondMatrix.generateMatrixTable('main_container')
 
-  let matrix3 = matrix1.add(matrix2);
-  console.log(matrix1.toString())
-  console.log(matrix2.toString())
-  console.log(matrix3.toString())
+  // generate and append the controls for each matrix
+  generateMatrixControls()
+  addMatrixControlsToPage('controls_container')
 
-  let matrix4 = matrix1.subtract(matrix2);
-  console.log(matrix4.toString())
+  // create the buttons for adding or removing matrices beyond our initial default
+  let buttonAddMatrix = document.createElement('button'),
+      buttonRemoveMatrix = document.createElement('button')
 
-  let transposeTest = new Matrix(3, 2, 'asc')
-
-  console.log(transposeTest.toString())
-  console.log(transposeTest.transpose().toString())
-
-  matrixTest1 = new Matrix(2, 3, 'asc')
-  matrixTest2 = new Matrix(2, 3, 'asc')
-  
-  let matrixTestTable1 = new MatrixTable(matrixTest1, 'main_container'),
-      matrixTestTable2 = new MatrixTable(matrixTest2, 'main_container')
-  
-  matrixTest1.test('BEEP')
-  // TODO: FIX MATRIX MULTIPLY STUFF
-  /*
-  let matrixMult1 = new Matrix(1, 2),
-      matrixMult2 = new Matrix(2, 1)
-
-  console.log('MULTIPLY:')
-  console.log(matrixMult1.toString())
-  console.log(matrixMult2.toString())
-  console.log(matrixMult1.multiply(matrixMult2).toString())
-  */
 }
 
-/*
-function addMatrix(matrix, parentDivID, newTableID='') {
-  let rows = matrix.sizeRows(),
-      cols = matrix.sizeCols()
-
-  let table = document.createElement('table')
-  table.id = newTableID
-  matrix.tableDOM = table
-
-  for (let i=0; i <= rows; i++) {
-    // extra run of loop to add the buttons to the table
-    if (i>=rows) {
-      // create all the needed html DOM elements
-      let trTop = document.createElement('tr'),
-          tdTop = document.createElement('td'),
-          inputRows = document.createElement('input'),
-          inputCols = document.createElement('input')
-          
-      
-      // set up the DOM elements properties before appending them
-      tdTop.innerHTML = 'Rows/Cols:<br />'
-      inputRows.className = 'matrixSize'
-      inputCols.className = 'matrixSize'
-      inputRows.value = matrix.rows
-      inputCols.value = matrix.cols
-      tdTop.colSpan = matrix.cols
-      tdTop.className = 'topExtra'
-      tdTop.appendChild(inputRows)
-      inputRows.after(' x ')
-      tdTop.appendChild(inputCols)
-      trTop.appendChild(tdTop)
-      table.children[0].before(trTop)
-          
-      let storeOldValue = function() {
-        this.oldValue = this.value
-      }
-
-      let changeRow = function() {
-        if (isNaN(Number(this.value)) || this.value < 1) {
-          this.value = this.oldValue
-          alert("ERROR: Invalid input! Dimension must be a non-zero integer.");
-        } else {
-
-          let newRows = Math.floor(this.value)
-
-          let newMatrix = new Matrix(newRows, matrix.cols)
-          newMatrix.add(matrix)
-          matrix = newMatrix
-          addMatrix(matrix, parentDivID, newTableID)
-          let parentDiv = document.getElementById(parentDivID)
-          parentDiv.getElementsByTagName('table')[0].remove()
-
-          console.log('row count changed to',this.value)
-        }
-      }
-
-      let changeCol = function() {
-        if (isNaN(Number(this.value))) {
-          this.value = this.oldValue
-          alert("ERROR: Invalid input! Dimension must be a non-zero integer.");
-        } else {
-
-        }
-      }
-
-      inputRows.onfocus = inputCols.onfocus = storeOldValue
-      inputRows.onchange = changeRow
-      inputCols.onchange = changeCol
-
-      // used to disable buttons until click handlers are finished
-      
-      
-      // used so I dont have to wrap everything after the 'if' clause in an 'else'
-      continue
-    }
-
-    let tr = document.createElement('tr')
-    tr.id = i
-
-    for (let j=0; j < cols; j++) {
-      
-      let td = document.createElement('td'),
-          input = document.createElement('input')
-      
-      input.value = matrix.array[j][i]
-      
-      // validate the input after user "clicks out" of input field, if valid then update the Matrix object
-      input.onchange = function() {
-        
-        if (isNaN(Number(input.value))) {
-          input.value = matrix.array[j][i]
-          alert("ERROR: Invalid input! Matrix can only hold numbers.")
-        } else {
-          input.value = Number(input.value)
-          matrix.array[j][i] = Number(input.value)
-          console.log("Matrix changed:")
-          console.log(matrix.toString())
-        }
-      }
-
-      td.appendChild(input)
-      tr.appendChild(td)
-      
-    }
-
-    table.appendChild(tr)
-    document.getElementById(parentDivID).appendChild(table)
+// helper method for generating the controls per each matrix
+function generateMatrixControls() {
+  for (let i = 0; i < matrices.length; i++) {
+    let divControl = htmlObj('div'),
+        inputRows = htmlObj('input'),
+        inputCols = htmlObj('input')
     
+    inputRows.value = matrices[i].rows
+    inputCols.value = matrices[i].cols
+    inputRows.className = inputCols.className = 'controls'
+    divControl.style.width = (matrices[i].array.length * 51) + 'px'
+    divControl.className = 'matrixControl'
+
+    divControl.innerHTML = "Row/Cols:<br />"
+    divControl.appendChild(inputRows)
+    divControl.appendChild(inputCols)
+    matrixControls.push(divControl)
+
+    inputRows.onclick = inputCols.onclick = function() {
+      this.oldValue = this.value;
+    }
+
+    let onchangeAlert = 'Matrix dimension must be a non-zero number!'
+
+    inputRows.onchange = function() {
+      if (isNaN(this.value) || this.value < 1) {
+        this.value = this.oldValue
+        alert(onchangeAlert)
+      } else {
+        this.value = Math.floor(this.value)
+        matrices[i].rows = new Number(this.value)
+        matrices[i].resizeArray()
+      }
+    }
+
+    inputCols.onchange = function() {
+      if (isNaN(this.value) || this.value < 1) {
+        this.value = this.oldValue
+        alert(onchangeAlert)
+      } else {
+        this.value = Math.floor(this.value)
+        matrices[i].cols = Number(this.value)
+        matrices[i].resizeArray()
+
+        let unitWidth = DEFAULTS.cellWidth + DEFAULTS.cellPadding
+        divControl.style.width = (matrices[i].array.length * unitWidth)  + 'px'
+      }
+    }
   }
 }
-*/
+
+// helper method for adding the generated controls to the page
+function addMatrixControlsToPage(parentId) {
+  for (idx in matrixControls)
+    document.getElementById(parentId).append(matrixControls[idx])
+}
+
+// much more readability than having 'document.createElement' everywhere
+function htmlObj(tag) {
+  return document.createElement(tag);
+}

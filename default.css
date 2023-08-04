@@ -1,55 +1,70 @@
 body {
-    background-color: #333;
+    background-color: #555;
 }
 
 table {
     margin: 10px;
-    border: solid 1px #000;
+    margin-top: 0px;
+    background-color: #999;
+    border: solid 0px #000;
     display: block;
 }
 
 td {
-    border: solid 1px #000;
-    color: #fff;
+    border: solid 0px #000;
     text-align: center;
-    
-}
-
-td.topExtra {
-    padding: 10px;
-    margin: 10px;
+    padding: 0px;
+    margin: 0px;
 }
 
 div#main_container {
     border: solid 1px #000;
     padding: 5px;
     display: flex;
+    padding-top: 0px;
 }
 
-input {
-    border: solid 1px #fff;
-    padding: 3px;
+div#controls_container {
+    border: solid 1px #000;
+    padding: 5px;
+    padding-bottom: 0px;
+    display: flex;
+}
+
+div.matrixControl {
+    background-color: #999;
+    border: solid 0px #000;
+    margin: 10px;
+    margin-bottom: 0px;
+    padding: 10px;
     text-align: center;
-    width: 24pt;
-    height: auto;
-    
-    font-size: 18pt;
-    font-family: monospace;
+    font: 12pt monospace;
 }
 
-input.matrixSize {
-    width: 20pt;
+td input {
+    border: solid 0px #000;
+    text-align: center;
+    font: 16pt monospace;
+    background-color: #999;
+}
+
+input.controls {
+    border: solid 1px #000;
+    width: 50px;
+    margin: 1px;
+    text-align: center;
+    font: 12pt monospace;
     height: auto;
     border: none;
-}
-
-input:focus-within {
-    background-color: #ff9;
     outline: none;
 }
 
-button{
-    font-size: 16pt;
-    font-family: monospace;
-    width: 25pt;
+
+td input:hover {
+    background-color: #aaa;
+}
+
+td input:focus-within {
+    background-color: #9f9;
+    outline: none;
 }

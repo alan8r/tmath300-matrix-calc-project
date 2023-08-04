@@ -29,6 +29,30 @@ class Matrix {
     }
   }
 
+  resizeArray() {
+    let oldCols = this.array.length;
+    let diffCols = this.cols - oldCols;
+    let oldRows = this.array[0].length;
+    let diffRows = this.rows - oldRows;
+
+    
+    // for (var j = 0; j < oldCols; j++)
+      // for (var i = 0; i < diffCols; i++)
+        // this.array[j].push(0)
+    
+    if (this.rows > oldRows) {
+      
+    }
+
+    console.log(this.toString())
+
+    if (this.tableDOM != null) {
+      this.tableDOM.matrix = this;
+      this.tableDOM.generateTableInnerStructure()
+      this.tableDOM.refreshTable()
+    }
+  }
+
   getElemAt(indexRow, indexCol) {
     return this.array[indexCol-1][indexRow-1]
   }
@@ -198,7 +222,7 @@ class Matrix {
     return sb;
   }
 
-  test = (msg) => {
-    console.log(msg)
+  generateMatrixTable(parentId) {
+    this.tableDOM = new MatrixTable(this, parentId)
   }
 }
