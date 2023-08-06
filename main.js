@@ -18,7 +18,6 @@ function main() {
 
   // generate and append the initial matrix to our matrices collection
   defaultMatrix = new Matrix(DEFAULTS.rows, DEFAULTS.cols+1, 'asc')
-  console.log(defaultMatrix.toString())
   matrices.push(defaultMatrix)
   defaultMatrix.generateMatrixTable('main_container')
 
@@ -38,7 +37,12 @@ function main() {
 }
 
 // helper method for generating the controls per each matrix
-function generateMatrixControls() {
+generateMatrixControls = function() {
+  if (matrixControls.length > 0) {
+    matrixControls = []
+    removeAllMatrixControls()
+  }
+  
   for (let i = 0; i < matrices.length; i++) {
     let divControl = htmlObj('div'),
         inputRows = htmlObj('input'),
@@ -83,16 +87,23 @@ function generateMatrixControls() {
         matrices[i].cols = Number(this.value)
         matrices[i].resizeArray()
 
-        let unitWidth = DEFAULTS.cellWidth + DEFAULTS.cellPadding
+        // let unitWidth = DEFAULTS.cellWidth + DEFAULTS.cellPadding
         //divControl.style.width = (matrices[i].array.length * unitWidth)  + 'px'
       }
     }
   }
 }
 
+removeAllMatrixControls = function() {
+  document.getElementById('main_container').childNodes.forEach(div=>{
+    let innerDiv = div.children[0]
+    if (innerDiv.localName==='div') div.children[0].remove()
+  })
+}
+
 // helper method for adding the generated controls to the page
-function addMatrixControlsToPage(parentId) {
-   let container = document.getElementById(parentId)
+addMatrixControlsToPage = function(parentId) {
+  let container = document.getElementById(parentId)
   for (idx in matrixControls) {
     container.children[idx].children[0].before(matrixControls[idx])
   }
@@ -101,4 +112,14 @@ function addMatrixControlsToPage(parentId) {
 // much more readability than having 'document.createElement' everywhere
 function htmlObj(tag) {
   return document.createElement(tag);
+}
+
+addNewMatrixToPage = function(matrix, parentId) {
+  if (matrix.tableDOM===null) {
+    matrix.generateMatrixTable(parentId)
+    console.log('created new matrix table')
+  }
+  matrices.push(matrix)
+  generateMatrixControls()
+  addMatrixControlsToPage(parentId)
 }

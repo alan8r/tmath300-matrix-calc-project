@@ -22,26 +22,30 @@ class MatrixTable {
                 let td = document.createElement('td'),
                     input = document.createElement('input')
                     
-                td.style.width = DEFAULTS.cellWidth + 'px'
-                td.style.height = DEFAULTS.cellHeight + 'px'
-                // td.style.padding = DEFAULTS.cellPadding + 'px'
-                td.style.margin = DEFAULTS.cellPadding + 'px'
-                input.style.width = (DEFAULTS.cellWidth) + 'px'
-                input.style.height = (DEFAULTS.cellHeight) + 'px'
+                // td.style.width = DEFAULTS.cellWidth + 'px'
+                // td.style.height = DEFAULTS.cellHeight + 'px'
+                // td.style.margin = DEFAULTS.cellPadding + 'px'
+                input.style.width = DEFAULTS.cellWidth + 'px'
+                input.style.height = DEFAULTS.cellHeight + 'px'
 
                 // input.type = 'number'
 
                 input.onclick = function() {
                     this.oldValue = this.value
                 }
+
                 let _this = this
                 input.onchange = function() {
-                    if (isNaN(this.value)) {
+                    if (isNaN(this.value)||this.value===''||this.value===' ') {
                         alert('matrix value must be a number')
                         this.value = this.oldValue
                     } else {
                         _this.changeMatrixArray(r, c, this.value, this.oldValue)
                     }
+                }
+
+                input.ondragstart = function(event) {
+                    event.preventDefault()
                 }
 
                 td.appendChild(input)
