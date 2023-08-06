@@ -99,6 +99,37 @@ generateMatrixControls = function() {
       console.log(this)
     }
   }
+
+  /*#######################################
+  # testing matrix method stuff down here #
+  #######################################*/
+  
+  console.log('### ADD TEST ###')
+  let aAdd = new Matrix(2,4,'rand'),
+      bAdd = new Matrix(2,4,'asc'),
+      cAdd = aAdd.add(bAdd)
+  console.log('matrix A:\n'+aAdd.toString())
+  console.log('matrix B:\n'+bAdd.toString())
+  console.log('A + B:\n'+cAdd.toString())
+  console.log('################')
+
+  console.log('### SUBTRACT TEST ###')
+  let aSub = new Matrix(2,4,'rand'),
+      bSub = new Matrix(2,4,'asc'),
+      cSub = aSub.subtract(bSub)
+  console.log('matrix A:\n'+aSub.toString())
+  console.log('matrix B:\n'+bSub.toString())
+  console.log('A - B:\n'+cSub.toString())
+  console.log('#####################')
+
+  console.log('### MULTIPLY TEST ###')
+  let aMult = new Matrix(3,3,'asc'),
+      bMult = new Matrix(3,2,'asc'),
+      cMult = aMult.multiply(bMult)
+  console.log('matrix A:\n'+aMult.toString())
+  console.log('matrix B:\n'+bMult.toString())
+  console.log('A * B:\n'+cMult.toString())
+  console.log('#####################')
 }
 
 removeAllMatrixControls = function() {

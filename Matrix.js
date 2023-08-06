@@ -13,20 +13,7 @@ class Matrix {
     this.tableDOM = null
     
     this.array = [];
-    // for (let j=0; j<cols; j++) {
-    //   this.array.push([])
-    //   for (let i=0; i<rows; i++) {
-        
-    //     let arrElement = 0;   // default
-
-    //     if (mode.toLowerCase()==='asc') 
-    //       arrElement = j*rows+i
-    //     else if (mode.toLowerCase()==='desc') 
-    //       arrElement = (rows*cols) - (j*rows+i) - 1
-        
-    //     this.array[j].push(arrElement)
-    //   }
-    // }
+    
     let val = 0;
     for (let i = 0; i < rows; i++) {
       this.array.push([])
@@ -35,6 +22,8 @@ class Matrix {
           this.array[i].push(val++)
         else if (mode.toLowerCase()==='desc')
           this.array[i].push((rows*cols)-1-val++)
+        else if (mode.toLowerCase()==='rand')
+          this.array[i].push(Math.floor(Math.random()*100))
         else
           this.array[i].push(val)
       }
@@ -77,6 +66,7 @@ class Matrix {
     return this.cols
   }
 
+  // Add 'this' Matrix to parameter 'matrix' and return new Matrix as result
   add(matrix) {
     if (this.rows != matrix.rows && this.cols != matrix.cols) {
       console.error("Cannot add matrices of different sizes")
@@ -84,32 +74,28 @@ class Matrix {
     }
     let returnMatrix=new Matrix(this.rows, this.cols)
     
-    returnMatrix.tableDOM = this.tableDOM
-    for (let j=0; j<this.cols; j++) {
-      for (let i=0; i<this.rows; i++) {
-        returnMatrix.array[j][i] = this.array[j][i] + matrix.array[j][i]
-      }
-    }
+    for (let i = 0; i < this.rows; i++)
+      for (let j = 0; j < this.cols; j++)
+        returnMatrix.array[i][j] = this.array[i][j] + matrix.array[i][j]
     return returnMatrix
   }
 
+  // Subtract 'this' matrix from parameter 'matrix' and return new Matrix as result
   subtract(matrix) {
     if (this.rows != matrix.rows && this.cols != matrix.cols) {
-      console.error("Cannot subtract matrices of different sizes")
+      console.error("Cannot add matrices of different sizes")
       return
     }
     let returnMatrix=new Matrix(this.rows, this.cols)
-    for (let j=0; j<this.cols; j++) {
-      for (let i=0; i<this.rows; i++) {
-        returnMatrix.array[j][i] = this.array[j][i] - matrix.array[j][i]
-      }
-    }
+    
+    for (let i = 0; i < this.rows; i++)
+      for (let j = 0; j < this.cols; j++)
+        returnMatrix.array[i][j] = this.array[i][j] - matrix.array[i][j]
     return returnMatrix
   }
 
-  
+  // Multiply (crossmultiply) 'this' Matrix with parameter 'matrix' and return new Matrix as result
   multiply(matrix) {
-    // multiply this with matrix (crossproduct)
     
     var row1 = this.array.length;
 
@@ -129,7 +115,7 @@ class Matrix {
 
     var summation = 0;
 
-    console.log('row1: ',row1,'row2: ',row2,'columns2: ',columns2)
+    //console.log('row1: ',row1,'row2: ',row2,'columns2: ',columns2)
 
     for(var i = 0; i < row1; i++) {
 
@@ -139,49 +125,52 @@ class Matrix {
           summation = summation + this.array[i][k] * matrix.array[k][j];
         }
 
-        console.log(result[i][j])
-        console.log(summation)
+        //console.log(result[i][j])
+        //console.log(summation)
         result[i][j] = summation;
         
         summation = 0
       }
     }
-    return result
+    let returnMatrix = new Matrix(result.length, result[0].length)
+    // copy result matrix in to returnMatrix.array
+    returnMatrix.array = result.slice()
+    return returnMatrix
   }
 
-  multiply(matrix1, matrix2){
+//   multiply(matrix1, matrix2){
 
-    var row1 = matrix1.length;
+//     var row1 = matrix1.length;
 
-    var columns1 = matrix1[0].length;
+//     var columns1 = matrix1[0].length;
 
-    var row2 = matrix2.length;
+//     var row2 = matrix2.length;
 
-    var columns2 = matrix2[0].length;
+//     var columns2 = matrix2[0].length;
 
-    var result = new Array(row1,row2);
+//     var result = new Array(row1,row2);
 
-    var summation = 0;
+//     var summation = 0;
 
-    for(var i = 0; r < row1; i++) {
+//     for(var i = 0; r < row1; i++) {
 
-      for (var j = 0; j < columns2; j++) {
+//       for (var j = 0; j < columns2; j++) {
 
-        for (var k = 0; k < columns1; k++ ) {
+//         for (var k = 0; k < columns1; k++ ) {
 
-          summation = summation + matrix1[i][k] * matrix2[k][j];
-      }
+//           summation = summation + matrix1[i][k] * matrix2[k][j];
+//       }
 
-      result[i][j] = summation;
+//       result[i][j] = summation;
 
-      summation = 0
+//       summation = 0
 
-    }
+//     }
 
-  }
-    return result;
+//   }
+//     return result;
 
-}
+// }
 
 
   isSquare() {
