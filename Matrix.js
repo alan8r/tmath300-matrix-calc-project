@@ -69,11 +69,11 @@ class Matrix {
     return this.array[indexCol-1][indexRow-1]
   }
 
-  sizeRows() {
+  getRows() {
     return this.rows
   }
 
-  sizeCols() {
+  getCols() {
     return this.cols
   }
 

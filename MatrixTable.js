@@ -53,16 +53,20 @@ class MatrixTable {
     }
 
     changeMatrixArray(row, col, value, oldValue) {
-        this.matrix.array[col][row] = Number(value)
-        console.log('matrix changed from '+value+' to '+oldValue+' @ r'+row+'c'+col)
+        this.matrix.array[row][col] = Number(value)
+        console.log('matrix changed from '+oldValue+' to '+value+' @ r'+(row+1)+'c'+(col+1))
         console.log(this.matrix.toString())
     }
     
     updateInputFields() {
         let inputs = this.table.getElementsByTagName('input')
-        for(let i = 0; i < this.matrix.rows; i++)
-            for (let j = 0; j < this.matrix.cols; j++)    
-                inputs[i*this.matrix.cols+j].value = this.matrix.array[i][j]
+        let incr = 0
+        let rows = this.matrix.getRows()
+        let cols = this.matrix.getCols()
+        for(let i = 0; i < rows; i++)
+            for (let j = 0; j < cols; j++) {
+                inputs[incr++].value = this.matrix.array[i][j]
+            }
     }
 
     refreshTable() {
