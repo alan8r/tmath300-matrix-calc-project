@@ -35,6 +35,11 @@ div.matrixControl {
     padding: 10px;
     text-align: center;
     font: 12pt monospace;
+    display: flex;
+}
+
+div.buttonControls div {
+    display: inline-block;
 }
 
 td input {

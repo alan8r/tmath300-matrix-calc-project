@@ -33,7 +33,6 @@ function main() {
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
 
-
 }
 
 // helper method for generating the controls per each matrix
@@ -45,8 +44,11 @@ generateMatrixControls = function() {
   
   for (let i = 0; i < matrices.length; i++) {
     let divControl = htmlObj('div'),
+        divRowsCols = htmlObj('div'),
+        divButtons = htmlObj('div'),
         inputRows = htmlObj('input'),
-        inputCols = htmlObj('input')
+        inputCols = htmlObj('input'),
+        buttonRemoveMatrix = htmlObj('button')
     
     inputRows.value = matrices[i].rows
     inputCols.value = matrices[i].cols
@@ -54,9 +56,12 @@ generateMatrixControls = function() {
     // divControl.style.width = (matrices[i].array.length * 51) + 'px'
     divControl.className = 'matrixControl'
 
-    divControl.innerHTML = "Row/Cols:<br />"
-    divControl.appendChild(inputRows)
-    divControl.appendChild(inputCols)
+    divRowsCols.innerHTML = "Row/Cols:<br />"
+    divRowsCols.appendChild(inputRows)
+    divRowsCols.appendChild(inputCols)
+    divButtons.appendChild(buttonRemoveMatrix)
+    divControl.appendChild(divRowsCols)
+    divControl.appendChild(divButtons)
     matrixControls.push(divControl)
 
     inputRows.onclick = inputCols.onclick = function() {
@@ -86,10 +91,12 @@ generateMatrixControls = function() {
         this.value = Math.floor(this.value)
         matrices[i].cols = Number(this.value)
         matrices[i].resizeArray()
-
-        // let unitWidth = DEFAULTS.cellWidth + DEFAULTS.cellPadding
-        //divControl.style.width = (matrices[i].array.length * unitWidth)  + 'px'
       }
+    }
+
+    buttonRemoveMatrix.innerText = 'X'
+    buttonRemoveMatrix.onclick = function() {
+      console.log(this)
     }
   }
 }
