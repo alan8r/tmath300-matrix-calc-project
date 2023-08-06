@@ -13,18 +13,30 @@ class Matrix {
     this.tableDOM = null
     
     this.array = [];
-    for (let j=0; j<cols; j++) {
-      this.array.push([])
-      for (let i=0; i<rows; i++) {
+    // for (let j=0; j<cols; j++) {
+    //   this.array.push([])
+    //   for (let i=0; i<rows; i++) {
         
-        let arrElement = 0;   // default
+    //     let arrElement = 0;   // default
 
-        if (mode.toLowerCase()==='asc') 
-          arrElement = j*rows+i
-        else if (mode.toLowerCase()==='desc') 
-          arrElement = (rows*cols) - (j*rows+i) - 1
+    //     if (mode.toLowerCase()==='asc') 
+    //       arrElement = j*rows+i
+    //     else if (mode.toLowerCase()==='desc') 
+    //       arrElement = (rows*cols) - (j*rows+i) - 1
         
-        this.array[j].push(arrElement)
+    //     this.array[j].push(arrElement)
+    //   }
+    // }
+    let val = 0;
+    for (let i = 0; i < rows; i++) {
+      this.array.push([])
+      for (let j = 0; j < cols; j++) {                        
+        if (mode.toLowerCase()==='asc')
+          this.array[i].push(val++)
+        else if (mode.toLowerCase()==='desc')
+          this.array[i].push((rows*cols)-1-val++)
+        else
+          this.array[i].push(val)
       }
     }
   }
@@ -214,12 +226,9 @@ class Matrix {
   }
 
   toString() {
-    let sb = "";
-    for (let j=0; j<this.cols; j++) {
-      sb += this.array[j].toString().split(',').join('\t')
-      sb += '\n'
-    }
-    return sb;
+    let sb = ""
+    this.array.forEach(row=>sb+=row.toString().split(',').join('\t')+'\n')
+    return sb
   }
 
   generateMatrixTable(parentId) {

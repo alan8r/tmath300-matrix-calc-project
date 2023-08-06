@@ -5,7 +5,7 @@ body {
 table {
     margin: 10px;
     margin-top: 0px;
-    background-color: #999;
+    /* background-color: #999; */
     border: solid 0px #000;
     display: block;
 }
@@ -21,21 +21,17 @@ div#main_container {
     border: solid 1px #000;
     padding: 5px;
     display: flex;
-    padding-top: 0px;
 }
 
-div#controls_container {
+div#main_container div.tableContainer {
     border: solid 1px #000;
-    padding: 5px;
-    padding-bottom: 0px;
-    display: flex;
+    text-align: center;
 }
 
 div.matrixControl {
     background-color: #999;
     border: solid 0px #000;
     margin: 10px;
-    margin-bottom: 0px;
     padding: 10px;
     text-align: center;
     font: 12pt monospace;

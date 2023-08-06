@@ -18,6 +18,7 @@ function main() {
 
   // generate and append the initial matrix to our matrices collection
   defaultMatrix = new Matrix(DEFAULTS.rows, DEFAULTS.cols+1, 'asc')
+  console.log(defaultMatrix.toString())
   matrices.push(defaultMatrix)
   defaultMatrix.generateMatrixTable('main_container')
 
@@ -27,11 +28,12 @@ function main() {
 
   // generate and append the controls for each matrix
   generateMatrixControls()
-  addMatrixControlsToPage('controls_container')
+  addMatrixControlsToPage('main_container')
 
   // create the buttons for adding or removing matrices beyond our initial default
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
+
 
 }
 
@@ -45,7 +47,7 @@ function generateMatrixControls() {
     inputRows.value = matrices[i].rows
     inputCols.value = matrices[i].cols
     inputRows.className = inputCols.className = 'controls'
-    divControl.style.width = (matrices[i].array.length * 51) + 'px'
+    // divControl.style.width = (matrices[i].array.length * 51) + 'px'
     divControl.className = 'matrixControl'
 
     divControl.innerHTML = "Row/Cols:<br />"
@@ -60,6 +62,7 @@ function generateMatrixControls() {
     let onchangeAlert = 'Matrix dimension must be a non-zero number!'
 
     inputRows.onchange = function() {
+      console.log('row change')
       if (isNaN(this.value) || this.value < 1) {
         this.value = this.oldValue
         alert(onchangeAlert)
@@ -71,6 +74,7 @@ function generateMatrixControls() {
     }
 
     inputCols.onchange = function() {
+      console.log('col change')
       if (isNaN(this.value) || this.value < 1) {
         this.value = this.oldValue
         alert(onchangeAlert)
@@ -80,7 +84,7 @@ function generateMatrixControls() {
         matrices[i].resizeArray()
 
         let unitWidth = DEFAULTS.cellWidth + DEFAULTS.cellPadding
-        divControl.style.width = (matrices[i].array.length * unitWidth)  + 'px'
+        //divControl.style.width = (matrices[i].array.length * unitWidth)  + 'px'
       }
     }
   }
@@ -88,8 +92,10 @@ function generateMatrixControls() {
 
 // helper method for adding the generated controls to the page
 function addMatrixControlsToPage(parentId) {
-  for (idx in matrixControls)
-    document.getElementById(parentId).append(matrixControls[idx])
+   let container = document.getElementById(parentId)
+  for (idx in matrixControls) {
+    container.children[idx].children[0].before(matrixControls[idx])
+  }
 }
 
 // much more readability than having 'document.createElement' everywhere

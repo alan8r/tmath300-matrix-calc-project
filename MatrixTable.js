@@ -1,8 +1,11 @@
 class MatrixTable {
     constructor(matrix, parentId) {
         this.matrix = matrix
+        this.divTable = document.createElement('div')
+        this.divTable.className = 'tableContainer'
         this.table = document.createElement('table')
-        document.getElementById(parentId).appendChild(this.table)
+        this.divTable.appendChild(this.table)
+        document.getElementById(parentId).appendChild(this.divTable)
         this.generateTableInnerStructure()
         this.updateInputFields()
     }
@@ -26,6 +29,21 @@ class MatrixTable {
                 input.style.width = (DEFAULTS.cellWidth) + 'px'
                 input.style.height = (DEFAULTS.cellHeight) + 'px'
 
+                // input.type = 'number'
+
+                input.onclick = function() {
+                    this.oldValue = this.value
+                }
+                let _this = this
+                input.onchange = function() {
+                    if (isNaN(this.value)) {
+                        alert('matrix value must be a number')
+                        this.value = this.oldValue
+                    } else {
+                        _this.changeMatrixArray(r, c, this.value, this.oldValue)
+                    }
+                }
+
                 td.appendChild(input)
                 tr.appendChild(td)
             }
@@ -33,12 +51,18 @@ class MatrixTable {
         }
         this.table.appendChild(tableBody)
     }
+
+    changeMatrixArray(row, col, value, oldValue) {
+        this.matrix.array[col][row] = Number(value)
+        console.log('matrix changed from '+value+' to '+oldValue+' @ r'+row+'c'+col)
+        console.log(this.matrix.toString())
+    }
     
     updateInputFields() {
         let inputs = this.table.getElementsByTagName('input')
-        for(let j = 0; j < this.matrix.cols; j++)
-            for (let i = 0; i < this.matrix.rows; i++)    
-                inputs[j*this.matrix.rows+i].value = this.matrix.array[j][i]
+        for(let i = 0; i < this.matrix.rows; i++)
+            for (let j = 0; j < this.matrix.cols; j++)    
+                inputs[i*this.matrix.cols+j].value = this.matrix.array[i][j]
     }
 
     refreshTable() {
