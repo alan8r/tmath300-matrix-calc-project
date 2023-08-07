@@ -1,7 +1,11 @@
 /*
     main.js
-    Main codefile/entrypoint. App effectively starts running from here.
+      Main codefile/entrypoint. 
+      webapp effectively starts running from here after the index.html is opened/loaded.
 */
+
+// flag to cause certain tests and other debugging features to run and enable
+const DEBUG = true
 
 const DEFAULTS = {
   rows: 3,
@@ -33,10 +37,32 @@ function main() {
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
 
-  /*#######################################
-  # testing matrix method stuff down here #
-  #######################################*/
+  if (DEBUG) matrixOperationsTests()
+}
+
+
+
+
+// much more readability than having 'document.createElement' everywhere
+function htmlObj(tag) {
+  return document.createElement(tag);
+}
+
+// helper method for adding new matrices to the page
+addNewMatrixToPage = function(matrix, parentId) {
+  if (matrix.tableDOM===null) {
+    matrix.generateMatrixTable(parentId)
+    console.log('created new matrix table')
+  }
+  matrices.push(matrix)
+  generateMatrixControls()
+  addMatrixControlsToPage(parentId)
+}
+
+// helper method for testing different Matrix operations/methods
+matrixOperationsTests = function() {
   
+  // test for the Matrix.add method
   console.log('### ADD TEST ###')
   let aAdd = new Matrix(2,4,'rand'),
       bAdd = new Matrix(2,4,'asc'),
@@ -46,6 +72,7 @@ function main() {
   console.log('A + B:\n'+cAdd.toString())
   console.log('################')
 
+  // test for the Matrix.subtract method
   console.log('### SUBTRACT TEST ###')
   let aSub = new Matrix(2,4,'rand'),
       bSub = new Matrix(2,4,'asc'),
@@ -55,6 +82,7 @@ function main() {
   console.log('A - B:\n'+cSub.toString())
   console.log('#####################')
 
+  // test for the Matrix.multiply method
   console.log('### MULTIPLY TEST ###')
   let aMult = new Matrix(3,3,'asc'),
       bMult = new Matrix(3,2,'asc'),
@@ -64,6 +92,7 @@ function main() {
   console.log('A * B:\n'+cMult.toString())
   console.log('#####################')
 
+  // test for the Matrix.transpose method
   console.log('### TRANSPOSE TEST ###')
   let aTpose = new Matrix(3,2,'asc'),
       aaTpose = aTpose.transpose(),
@@ -75,98 +104,5 @@ function main() {
   console.log('matrix B:\n'+bTpose.toString())
   console.log('matrix B^T:\n'+bbTpose.toString())
   console.log('######################')
-}
 
-// helper method for generating the controls per each matrix
-generateMatrixControls = function() {
-  if (matrixControls.length > 0) {
-    matrixControls = []
-    removeAllMatrixControls()
-  }
-  
-  for (let i = 0; i < matrices.length; i++) {
-    let divControl = htmlObj('div'),
-        divRowsCols = htmlObj('div'),
-        divButtons = htmlObj('div'),
-        inputRows = htmlObj('input'),
-        inputCols = htmlObj('input'),
-        buttonRemoveMatrix = htmlObj('button')
-    
-    inputRows.value = matrices[i].rows
-    inputCols.value = matrices[i].cols
-    inputRows.className = inputCols.className = 'controls'
-    // divControl.style.width = (matrices[i].array.length * 51) + 'px'
-    divControl.className = 'matrixControl'
-
-    divRowsCols.innerHTML = "Row/Cols:<br />"
-    divRowsCols.appendChild(inputRows)
-    divRowsCols.appendChild(inputCols)
-    divButtons.appendChild(buttonRemoveMatrix)
-    divControl.appendChild(divRowsCols)
-    divControl.appendChild(divButtons)
-    matrixControls.push(divControl)
-
-    inputRows.onclick = inputCols.onclick = function() {
-      this.oldValue = this.value;
-    }
-
-    let onchangeAlert = 'Matrix dimension must be a non-zero number!'
-
-    inputRows.onchange = function() {
-      console.log('row change')
-      if (isNaN(this.value) || this.value < 1) {
-        this.value = this.oldValue
-        alert(onchangeAlert)
-      } else {
-        this.value = Math.floor(this.value)
-        matrices[i].resizeMatrix(Number(this.value), matrices[i].cols)
-      }
-    }
-
-    inputCols.onchange = function() {
-      console.log('col change')
-      if (isNaN(this.value) || this.value < 1) {
-        this.value = this.oldValue
-        alert(onchangeAlert)
-      } else {
-        this.value = Math.floor(this.value)
-        matrices[i].resizeMatrix(matrices[i].rows, Number(this.value))
-      }
-    }
-
-    buttonRemoveMatrix.innerText = 'X'
-    buttonRemoveMatrix.onclick = function() {
-      console.log(this)
-    }
-  }
-}
-
-removeAllMatrixControls = function() {
-  document.getElementById('main_container').childNodes.forEach(div=>{
-    let innerDiv = div.children[0]
-    if (innerDiv.localName==='div') div.children[0].remove()
-  })
-}
-
-// helper method for adding the generated controls to the page
-addMatrixControlsToPage = function(parentId) {
-  let container = document.getElementById(parentId)
-  for (idx in matrixControls) {
-    container.children[idx].children[0].before(matrixControls[idx])
-  }
-}
-
-// much more readability than having 'document.createElement' everywhere
-function htmlObj(tag) {
-  return document.createElement(tag);
-}
-
-addNewMatrixToPage = function(matrix, parentId) {
-  if (matrix.tableDOM===null) {
-    matrix.generateMatrixTable(parentId)
-    console.log('created new matrix table')
-  }
-  matrices.push(matrix)
-  generateMatrixControls()
-  addMatrixControlsToPage(parentId)
 }
