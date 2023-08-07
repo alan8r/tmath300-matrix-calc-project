@@ -22,9 +22,6 @@ class MatrixTable {
                 let td = document.createElement('td'),
                     input = document.createElement('input')
                     
-                // td.style.width = DEFAULTS.cellWidth + 'px'
-                // td.style.height = DEFAULTS.cellHeight + 'px'
-                // td.style.margin = DEFAULTS.cellPadding + 'px'
                 input.style.width = DEFAULTS.cellWidth + 'px'
                 input.style.height = DEFAULTS.cellHeight + 'px'
 
