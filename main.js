@@ -63,6 +63,18 @@ function main() {
   console.log('matrix B:\n'+bMult.toString())
   console.log('A * B:\n'+cMult.toString())
   console.log('#####################')
+
+  console.log('### TRANSPOSE TEST ###')
+  let aTpose = new Matrix(3,2,'asc'),
+      aaTpose = aTpose.transpose(),
+      bTpose = new Matrix(3,3,'asc'),
+      bbTpose = bTpose.transpose()
+      
+  console.log('matrix A:\n'+aTpose.toString())
+  console.log('matrix A^T:\n'+aaTpose.toString())
+  console.log('matrix B:\n'+bTpose.toString())
+  console.log('matrix B^T:\n'+bbTpose.toString())
+  console.log('######################')
 }
 
 // helper method for generating the controls per each matrix

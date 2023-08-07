@@ -171,12 +171,13 @@ class Matrix {
     return returnMatrix
   }
 
+  // returns whether the Matrix is square (rows == cols)
   isSquare() {
     return (this.rows == this.cols)
   }
 
+  // returns a new Matrix that is the transpose of 'this' Matrix
   transpose() {
-    // return transposed matrix ("right rotation, flip on vertical axis")
     let result = new Matrix(this.cols, this.rows)
     result.tableDOM = this.tableDOM
     result.array = this.array[0].map((col, c) => this.array.map((row, r) => this.array[r][c]))
