@@ -121,4 +121,5 @@ matrixOperationsTests = function() {
   let isSingularMatrix = new Matrix(2,2,'rand') 
   console.log(isSingularMatrix.isSingular().toString())
   
+  console.log('testing')
 }
