@@ -16,7 +16,8 @@ const DEFAULTS = {
 }
 
 let matrices = [],
-    matrixControls = [];
+    matrixControls = [],
+    matrixOpControls = []
 
 function main() {
 
@@ -24,6 +25,9 @@ function main() {
   defaultMatrix = new Matrix(DEFAULTS.rows, DEFAULTS.cols+1, 'asc')
   matrices.push(defaultMatrix)
   defaultMatrix.generateMatrixTable('main_container')
+
+  defaultOpSelector = new MatrixOpSelector()
+  matrixOpControls.push(defaultOpSelector)
 
   secondMatrix = new Matrix(4,3,'asc')
   matrices.push(secondMatrix)
@@ -33,6 +37,7 @@ function main() {
   generateMatrixControls()
   addMatrixControlsToPage('main_container')
 
+  document.getElementById('main_container').children[0].after(defaultOpSelector.divContainer)
   // create the buttons for adding or removing matrices beyond our initial default
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
@@ -63,46 +68,46 @@ addNewMatrixToPage = function(matrix, parentId) {
 matrixOperationsTests = function() {
   
   // test for the Matrix.add method
-  console.log('### ADD TEST ###')
+  console.debug('### ADD TEST ###')
   let aAdd = new Matrix(2,4,'rand'),
       bAdd = new Matrix(2,4,'asc'),
       cAdd = aAdd.add(bAdd)
-  console.log('matrix A:\n'+aAdd.toString())
-  console.log('matrix B:\n'+bAdd.toString())
-  console.log('A + B:\n'+cAdd.toString())
-  console.log('################')
+  console.debug('matrix A:\n'+aAdd.toString())
+  console.debug('matrix B:\n'+bAdd.toString())
+  console.debug('A + B:\n'+cAdd.toString())
+  console.debug('################')
 
   // test for the Matrix.subtract method
-  console.log('### SUBTRACT TEST ###')
+  console.debug('### SUBTRACT TEST ###')
   let aSub = new Matrix(2,4,'rand'),
       bSub = new Matrix(2,4,'asc'),
       cSub = aSub.subtract(bSub)
-  console.log('matrix A:\n'+aSub.toString())
-  console.log('matrix B:\n'+bSub.toString())
-  console.log('A - B:\n'+cSub.toString())
-  console.log('#####################')
+  console.debug('matrix A:\n'+aSub.toString())
+  console.debug('matrix B:\n'+bSub.toString())
+  console.debug('A - B:\n'+cSub.toString())
+  console.debug('#####################')
 
   // test for the Matrix.multiply method
-  console.log('### MULTIPLY TEST ###')
+  console.debug('### MULTIPLY TEST ###')
   let aMult = new Matrix(3,3,'asc'),
       bMult = new Matrix(3,2,'asc'),
       cMult = aMult.multiply(bMult)
-  console.log('matrix A:\n'+aMult.toString())
-  console.log('matrix B:\n'+bMult.toString())
-  console.log('A * B:\n'+cMult.toString())
-  console.log('#####################')
+  console.debug('matrix A:\n'+aMult.toString())
+  console.debug('matrix B:\n'+bMult.toString())
+  console.debug('A * B:\n'+cMult.toString())
+  console.debug('#####################')
 
   // test for the Matrix.transpose method
-  console.log('### TRANSPOSE TEST ###')
+  console.debug('### TRANSPOSE TEST ###')
   let aTpose = new Matrix(3,2,'asc'),
       aaTpose = aTpose.transpose(),
       bTpose = new Matrix(3,3,'asc'),
       bbTpose = bTpose.transpose()
       
-  console.log('matrix A:\n'+aTpose.toString())
-  console.log('matrix A^T:\n'+aaTpose.toString())
-  console.log('matrix B:\n'+bTpose.toString())
-  console.log('matrix B^T:\n'+bbTpose.toString())
-  console.log('######################')
+  console.debug('matrix A:\n'+aTpose.toString())
+  console.debug('matrix A^T:\n'+aaTpose.toString())
+  console.debug('matrix B:\n'+bTpose.toString())
+  console.debug('matrix B^T:\n'+bbTpose.toString())
+  console.debug('######################')
 
 }

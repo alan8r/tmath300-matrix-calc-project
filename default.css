@@ -23,6 +23,18 @@ div#main_container {
     display: flex;
 }
 
+div.selectDivContainer {
+    border: solid 1px #000;
+    background-color: #999;
+    text-align: center;
+    margin-top: 10%;
+    height: 5%;
+}
+
+select.selectMatrixOp {
+    text-align: center;
+}
+
 div#main_container div.tableContainer {
     border: solid 1px #000;
     text-align: center;
