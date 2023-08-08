@@ -1,6 +1,11 @@
 class MatrixOpSelector {
     
-    options = ['add (+)','substact (-)','multiply right (* ->)', 'multiply left (<- *)']
+    options = [
+        '[ + ]',
+        '[ - ]',
+        '[ * -> ]',
+        '[ <- * ]'
+    ]
 
     constructor() {
         this.divContainer = document.createElement('div')

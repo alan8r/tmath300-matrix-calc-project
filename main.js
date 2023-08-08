@@ -41,11 +41,9 @@ function main() {
   // create the buttons for adding or removing matrices beyond our initial default
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
-
+  buttonCalculate = document.getElementById('calculate')
   if (DEBUG) matrixOperationsTests()
 }
-
-
 
 
 // much more readability than having 'document.createElement' everywhere
