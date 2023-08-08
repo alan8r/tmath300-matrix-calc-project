@@ -17,6 +17,19 @@ td {
     margin: 0px;
 }
 
+button.calculate-button{
+    background-color: rgb(173, 173, 173);
+    color:rgb(0, 0, 0);
+    border: none;
+    height: 36px;
+    width: 90px;
+    border-radius: 18px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor:pointer;
+    margin-left: 8px;
+}
+
 div#main_container {
     border: solid 1px #000;
     padding: 5px;
@@ -27,7 +40,7 @@ div.selectDivContainer {
     border: solid 1px #000;
     background-color: #999;
     text-align: center;
-    margin-top: 7%;
+    margin-top: 10%;
     height: 10%;
 }
 

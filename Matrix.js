@@ -127,12 +127,15 @@ class Matrix {
 
   // Subtract 'this' matrix from parameter 'matrix' and return new Matrix as result
   subtract(matrix) {
+    // check to see if rows/columns match
     if (this.rows != matrix.rows && this.cols != matrix.cols) {
       console.error("Cannot add matrices of different sizes")
       return
     }
+    // create a matrix to hold the result
     let returnMatrix=new Matrix(this.rows, this.cols)
     
+    // iterate over all the values in both matrices and put the result in to the returnMatrix
     for (let i = 0; i < this.rows; i++)
       for (let j = 0; j < this.cols; j++)
         returnMatrix.array[i][j] = this.array[i][j] - matrix.array[i][j]
@@ -185,15 +188,74 @@ class Matrix {
   }
 
   inverse() {
-    // return inverse of this
-  }
+    //create 2d array temp
+    let a = this.getElemAt(1,1),
+     b = this.getElemAt(2,1),
+     c = this.getElemAt(1,2),
+     d = this.getElemAt(2,2),
+     determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(2,1) * this.getElemAt(1,2));
+     console.log(a.toString())
+     console.log(b.toString())
+     console.log(c.toString())
+     console.log(d.toString())
+     console.log(determinant.toString())
+     let temp = [];
+     for (let i = 0; i < this.rows; i++) {
+       temp[i] = [];
+       for (let j = 0; j < this.cols; j++) {
+           temp[i][j] = this.getElemAt(i+1,j+1);
+       }
+   }
+   this.array[0][0] = temp[1][1];  // annoying 
+   console.log("temp array ! :: " + temp);
+    // let returnMatrix=new Matrix(this.rows, this.cols)
+
+    // console.log("return matrix: " + returnMatrix);
+    // console.log("end of reutn matrix");
+    // for (let i = 0; i < this.rows; i++){
+    //   for (let j = 0; j < this.cols; j++){
+    //        temp.push(i,j) = returnMatrix.getElemAt(i+1,j+1);
+    //      }
+    //    }
+
+
+    //   returnMatrix[0][0] = temp[2][1];
+    //    returnMatrix.getElemAt(1,1) = temp[0][0];
+
+    //    returnMatrix.getElemAt(1,2) = -1;
+    //    returnMatrix.getElemAt(2,1)= -1;
+
+    //  for (let i = 0; i < this.rows; i++)
+    //   for (let j = 0; j < this.cols; j++)
+    //    returnMatrix.array[i][j] = this.array[i][j] * (1/determinant)
+    //     return returnMatrix
+       return this.array;
+ }
 
   isSingular() {
     // return if matrix is singular
+
+    let determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(1,2) * this.getElemAt(2,1));
+
+    if (this.rows != this.cols) {
+      console.error("singular matrix only apply to square matrices.")
+      return;
+    }
+
+      if (determinant != 0){
+        return false;
+      }
+      else{return true}
   }
 
   isConsistent() {
-    // return if matrix is consistent
+    let determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(1,2) * this.getElemAt(2,1));
+
+    if (determinant != 0){
+      return false;
+    }
+    else{return 
+      true}
   }
 
   rank() {

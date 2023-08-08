@@ -42,6 +42,7 @@ function main() {
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
   buttonCalculate = document.getElementById('calculate')
+  
   if (DEBUG) matrixOperationsTests()
 }
 
@@ -108,4 +109,16 @@ matrixOperationsTests = function() {
   console.debug('matrix B^T:\n'+bbTpose.toString())
   console.debug('######################')
 
+  //test for inverse method
+  console.log('### INVERSE TEST ###')
+  let invMatrix = new Matrix(2,2,'asc')
+
+  console.log(invMatrix.toString())
+  console.log()
+  console.log(invMatrix.inverse().toString())
+
+  //test for isSingular
+  let isSingularMatrix = new Matrix(2,2,'rand') 
+  console.log(isSingularMatrix.isSingular().toString())
+  
 }
