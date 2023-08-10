@@ -63,8 +63,13 @@ div.matrixControl {
     display: flex;
 }
 
-div.buttonControls div {
-    display: inline-block;
+div.buttonControls div{
+    display: flex;
+}
+
+button.controlButtons {
+    width: 80px;
+    margin-left: 10px;
 }
 
 td input {

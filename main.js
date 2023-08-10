@@ -45,9 +45,6 @@ function main() {
   
   if (DEBUG) matrixOperationsTests()
 
-  // clear matrix button
-  
-  
 }
 
 
