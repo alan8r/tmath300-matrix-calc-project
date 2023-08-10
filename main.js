@@ -44,6 +44,10 @@ function main() {
   buttonCalculate = document.getElementById('calculate')
   
   if (DEBUG) matrixOperationsTests()
+
+  // clear matrix button
+  
+  
 }
 
 
@@ -110,16 +114,15 @@ matrixOperationsTests = function() {
   console.debug('######################')
 
   //test for inverse method
-  console.log('### INVERSE TEST ###')
+  console.debug('### INVERSE TEST ###')
   let invMatrix = new Matrix(2,2,'asc')
 
-  console.log(invMatrix.toString())
-  console.log()
-  console.log(invMatrix.inverse().toString())
+  console.debug(invMatrix.toString())
+  console.debug()
+  console.debug(invMatrix.inverse().toString())
 
   //test for isSingular
   let isSingularMatrix = new Matrix(2,2,'rand') 
-  console.log(isSingularMatrix.isSingular().toString())
-  
-  console.log('testing')
+  console.debug(isSingularMatrix.isSingular().toString())
+  console.debug('testing')
 }

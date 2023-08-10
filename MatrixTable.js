@@ -75,5 +75,8 @@ class MatrixTable {
         this.updateInputFields()
     }
 
+    getTable() {
+        return this.table
+    }
     
 }
