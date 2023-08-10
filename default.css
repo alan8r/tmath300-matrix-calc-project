@@ -37,6 +37,20 @@ button.calculate-button{
     .calculate-button:active{
     opacity:.6;
     }
+
+.title{
+font-family: Arial;
+font-size: 20px;
+text-align:center;
+margin-bottom: 0px;
+}
+
+.author{
+    font-family: Arial;
+    font-size: 10px;
+    text-align:center;
+    margin-top:6px;
+}
     
 div#main_container {
     border: solid 1px #000;
