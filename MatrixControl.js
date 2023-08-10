@@ -11,7 +11,8 @@ generateMatrixControls = function() {
           divButtons = htmlObj('div'),
           inputRows = htmlObj('input'),
           inputCols = htmlObj('input'),
-          buttonRemoveMatrix = htmlObj('button')
+          buttonRemoveMatrix = htmlObj('button'),
+          buttonMatrixProperties = htmlObj('button')
       
       inputRows.value = matrices[i].rows
       inputCols.value = matrices[i].cols
@@ -25,7 +26,11 @@ generateMatrixControls = function() {
       divRowsCols.innerHTML = "Row/Cols:<br />"
       divRowsCols.appendChild(inputRows)
       divRowsCols.appendChild(inputCols)
+
       divButtons.appendChild(buttonRemoveMatrix)
+      divButtons.appendChild(htmlObj('br'))
+      divButtons.appendChild(buttonMatrixProperties)
+      
       divControl.appendChild(divRowsCols)
       divControl.appendChild(divButtons)
       matrixControls.push(divControl)
@@ -58,10 +63,12 @@ generateMatrixControls = function() {
         }
       }
 
-      buttonRemoveMatrix.innerText = 'Clear'
+      buttonRemoveMatrix.className = buttonMatrixProperties.className = 'controlButtons'
+
+      buttonRemoveMatrix.innerText = 'CLEAR'
 
       buttonRemoveMatrix.onclick = function() {
-        const bTable = this.parentElement.parentElement.parentElement.children[1]
+        let bTable = this.parentElement.parentElement.parentElement.children[1]
          matrices.forEach(matrix=>{
           let matrixTable = matrix.tableDOM.getTable()
           console.log(bTable == matrixTable)
@@ -72,8 +79,40 @@ generateMatrixControls = function() {
           }
         })
       }
+
+      buttonMatrixProperties.innerText = 'Matrix Info'
+
+      buttonMatrixProperties.onclick = function() {
+        let bTable = this.parentElement.parentElement.parentElement.children[1]
+         matrices.forEach(matrix=>{
+          let matrixTable = matrix.tableDOM.getTable()
+          console.log(bTable == matrixTable)
+          if (bTable == matrixTable) {
+            let alertMessage = `MATRIX PROPERTIES:\n
+              Is square?   ${matrix.isSquare()}
+              ...
+              `
+              alert(alertMessage)
+          }
+        })
+      }
     }
   }
+
+  // getMatrixFromButton = function(button) {
+  //   let bTable = button.parentElement.parentElement.parentElement.children[1]
+  //   matrices.forEach(matrix1=>{
+
+  //     let matrixTable = matrix1.tableDOM.getTable()
+
+  //     if (bTable == matrixTable) {
+  //       console.log('match found')
+  //       console.log(matrix1)
+  //       return matrix1;
+  //     }
+
+  //   })
+  // }
   
   removeAllMatrixControls = function() {
     document.getElementById('main_container').childNodes.forEach(div=>{
