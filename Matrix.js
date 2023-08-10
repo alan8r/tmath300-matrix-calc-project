@@ -275,6 +275,13 @@ class Matrix {
     
   }
 
+  zeroArray() {
+    for (let i = 0; i < this.array.length; i++)
+      for (let j = 0; j < this.array[i].length; j++)
+        this.array[i][j] = 0
+    
+  }
+
   toString() {
     let sb = ""
     this.array.forEach(row=>sb+=row.toString().split(',').join('\t')+'\n')

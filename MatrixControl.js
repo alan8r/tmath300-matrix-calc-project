@@ -15,6 +15,9 @@ generateMatrixControls = function() {
       
       inputRows.value = matrices[i].rows
       inputCols.value = matrices[i].cols
+
+      inputRows.type = inputCols.type = "Number"
+
       inputRows.className = inputCols.className = 'controls'
       // divControl.style.width = (matrices[i].array.length * 51) + 'px'
       divControl.className = 'matrixControl'
@@ -54,10 +57,20 @@ generateMatrixControls = function() {
           matrices[i].resizeMatrix(matrices[i].rows, Number(this.value))
         }
       }
-  
-      buttonRemoveMatrix.innerText = 'X'
+
+      buttonRemoveMatrix.innerText = 'Clear'
+
       buttonRemoveMatrix.onclick = function() {
-        console.log(this)
+        const bTable = this.parentElement.parentElement.parentElement.children[1]
+         matrices.forEach(matrix=>{
+          let matrixTable = matrix.tableDOM.getTable()
+          console.log(bTable == matrixTable)
+          if (bTable == matrixTable) {
+            console.log('matrix zero\'d')
+            matrix.zeroArray()
+            matrix.tableDOM.refreshTable()
+          }
+        })
       }
     }
   }
