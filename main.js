@@ -118,8 +118,13 @@ matrixOperationsTests = function() {
   console.debug()
   console.debug(invMatrix.inverse().toString())
 
-  //test for isSingular
-  let isSingularMatrix = new Matrix(2,2,'rand') 
-  console.debug(isSingularMatrix.isSingular().toString())
-  console.debug('testing')
+  // Example usage
+
+  testMatrix = new Matrix (2, 2, 'asc')
+  testMatrixI = new Matrix()
+  testMatrix.isSingular(testMatrix.array)
+
+console.log(testMatrix.isSingular(testMatrix.array).toString())
+
+
 }
