@@ -232,21 +232,38 @@ class Matrix {
        return this.array;
  }
 
-  isSingular() {
-    // return if matrix is singular
+ determinant2x2(matrix) {
+  return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+}
 
-    let determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(1,2) * this.getElemAt(2,1));
+   determinant(matrix) {
+  const n = matrix.length;
 
-    if (this.rows != this.cols) {
-      console.error("singular matrix only apply to square matrices.")
-      return;
-    }
-
-      if (determinant != 0){
-        return false;
+  if (n === 1) {
+      return matrix[0][0];
+  } else if (n === 2) {
+      return this.determinant2x2(matrix);
+  } else {
+      let det = 0;
+      for (let i = 0; i < n; i++) {
+          const minorMatrix = [];
+          for (let j = 1; j < n; j++) {
+              const row = matrix[j].slice(0, i).concat(matrix[j].slice(i + 1));
+              minorMatrix.push(row);
+          }
+          det += matrix[0][i] * this.determinant(minorMatrix) * Math.pow(-1, i);
       }
-      else{return true}
+      return det;
   }
+}
+
+// Check if a matrix is singular (non-invertible) based on its determinant
+    isSingular(matrix) {
+  const det = this.determinant(matrix);
+  console.log('determinate: ' + det.toString())
+  return det === 0;
+}
+
 
   isConsistent() {
     let determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(1,2) * this.getElemAt(2,1));
@@ -257,6 +274,7 @@ class Matrix {
     else{return 
       true}
   }
+
 
   rank() {
     //return the rank of the matrix
