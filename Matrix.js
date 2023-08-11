@@ -147,7 +147,7 @@ class Matrix {
   // Multiply (crossmultiply) 'this' Matrix with parameter 'matrix' and return new Matrix as result
   multiply(matrix) {
 
-    if (this.rows != matrix.cols && this.cols != matrix.rows) {
+    if (this.rows != matrix.cols) {
       console.error("Cannot multiply matrices with dimension mismatch")
       alert("Cannot multiply matrices with dimension mismatch")
       return
