@@ -1,16 +1,16 @@
 class MatrixTable {
-    constructor(matrix, parentId) {
+    constructor(matrix, parentId, inputsEnabled=true) {
         this.matrix = matrix
         this.divTable = document.createElement('div')
         this.divTable.className = 'tableContainer'
         this.table = document.createElement('table')
         this.divTable.appendChild(this.table)
         document.getElementById(parentId).appendChild(this.divTable)
-        this.generateTableInnerStructure()
+        this.generateTableInnerStructure(inputsEnabled)
         this.updateInputFields()
     }
 
-    generateTableInnerStructure() {
+    generateTableInnerStructure(inputsEnabled=true) {
         if (this.table.children.length >= 1)
             this.table.children[0].remove()
 
@@ -26,6 +26,8 @@ class MatrixTable {
                 input.style.height = DEFAULTS.cellHeight + 'px'
 
                 // input.type = 'number'
+
+                if (!inputsEnabled) input.disabled = true;
 
                 input.onclick = function() {
                     this.oldValue = this.value
@@ -78,5 +80,4 @@ class MatrixTable {
     getTable() {
         return this.table
     }
-    
 }

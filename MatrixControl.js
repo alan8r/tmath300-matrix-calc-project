@@ -88,11 +88,13 @@ generateMatrixControls = function() {
           let matrixTable = matrix.tableDOM.getTable()
           console.log(bTable == matrixTable)
           if (bTable == matrixTable) {
+            
             let alertMessage = `MATRIX PROPERTIES:\n
               Is square?   ${matrix.isSquare()}
               ...
               `
               alert(alertMessage)
+              
           }
         })
       }

@@ -152,7 +152,7 @@ class Matrix {
     
     let result = [];
     for (let j = 0; j < row2; j++) {
-      result.push([]);  
+      result.push([])
     }
 
     let summation = 0;
@@ -288,7 +288,7 @@ class Matrix {
     return sb
   }
 
-  generateMatrixTable(parentId) {
-    this.tableDOM = new MatrixTable(this, parentId)
+  generateMatrixTable(parentId, inputsEnabled) {
+    this.tableDOM = new MatrixTable(this, parentId, inputsEnabled)
   }
 }
