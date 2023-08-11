@@ -115,6 +115,7 @@ class Matrix {
   add(matrix) {
     if (this.rows != matrix.rows && this.cols != matrix.cols) {
       console.error("Cannot add matrices of different sizes")
+      alert("Can't add matrices with different dimensions!")
       return
     }
     let returnMatrix=new Matrix(this.rows, this.cols)
@@ -130,6 +131,7 @@ class Matrix {
     // check to see if rows/columns match
     if (this.rows != matrix.rows && this.cols != matrix.cols) {
       console.error("Cannot add matrices of different sizes")
+      alert("Can't subtract matrices with different dimensions!")
       return
     }
     // create a matrix to hold the result
@@ -144,6 +146,12 @@ class Matrix {
 
   // Multiply (crossmultiply) 'this' Matrix with parameter 'matrix' and return new Matrix as result
   multiply(matrix) {
+
+    if (this.rows != matrix.cols && this.cols != matrix.rows) {
+      console.error("Cannot multiply matrices with dimension mismatch")
+      alert("Cannot multiply matrices with dimension mismatch")
+      return
+    }
     
     let row1 = this.array.length;
     let columns1 = this.array[0].length;
@@ -194,11 +202,11 @@ class Matrix {
      c = this.getElemAt(1,2),
      d = this.getElemAt(2,2),
      determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(2,1) * this.getElemAt(1,2));
-     console.log(a.toString())
-     console.log(b.toString())
-     console.log(c.toString())
-     console.log(d.toString())
-     console.log(determinant.toString())
+     console.debug(a.toString())
+     console.debug(b.toString())
+     console.debug(c.toString())
+     console.debug(d.toString())
+     console.debug(determinant.toString())
      let temp = [];
      for (let i = 0; i < this.rows; i++) {
        temp[i] = [];
@@ -207,7 +215,7 @@ class Matrix {
        }
    }
    this.array[0][0] = temp[1][1];  // annoying 
-   console.log("temp array ! :: " + temp);
+   console.debug("temp array ! :: " + temp);
     // let returnMatrix=new Matrix(this.rows, this.cols)
 
     // console.log("return matrix: " + returnMatrix);
@@ -251,11 +259,10 @@ class Matrix {
   isConsistent() {
     let determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(1,2) * this.getElemAt(2,1));
 
-    if (determinant != 0){
-      return false;
-    }
-    else{return 
-      true}
+    if (determinant != 0)
+      return false
+    else 
+      return true
   }
 
   rank() {

@@ -7,6 +7,8 @@
 // flag to cause certain tests and other debugging features to run and enable
 const DEBUG = true
 
+if (!DEBUG) console.debug = () => undefined
+
 const DEFAULTS = {
   rows: 3,
   cols: 3,
@@ -42,8 +44,35 @@ function main() {
   let buttonAddMatrix = document.createElement('button'),
       buttonRemoveMatrix = document.createElement('button')
   buttonCalculate = document.getElementById('calculate')
-  
-  if (DEBUG) matrixOperationsTests()
+ 
+  selectOperation = document.querySelector('select.selectMatrixOp')
+
+  buttonCalculate.onclick = function() {
+    selectOperation = document.querySelector('select.selectMatrixOp')
+    
+    let resultMatrix = null;
+
+    let selectChoice = selectOperation.selectedIndex
+
+    if (selectChoice == 0)
+      resultMatrix = defaultMatrix.add(secondMatrix)
+    else if (selectChoice == 1)
+      resultMatrix = defaultMatrix.subtract(secondMatrix)
+    else if (selectChoice == 2)
+      resultMatrix = defaultMatrix.multiply(secondMatrix)
+    else if (selectChoice == 3)
+      resultMatrix = secondMatrix.multiply(defaultMatrix)
+
+    if (resultMatrix) {
+      console.debug('Calculation result:\n'+resultMatrix.toString())
+      divResults = document.querySelector('div#results_container')
+      if (divResults.firstChild)
+        divResults.firstChild.remove()
+      resultMatrix.generateMatrixTable('results_container', false)
+    }
+  }
+
+  matrixOperationsTests()
 
 }
 

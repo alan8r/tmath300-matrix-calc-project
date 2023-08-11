@@ -7,6 +7,13 @@ class MatrixOpSelector {
         '[ <- * ]'
     ]
 
+    optionName = [
+        'add',
+        'subtract',
+        'rightMultiply',
+        'leftMultiply'
+    ]
+
     constructor() {
         this.divContainer = document.createElement('div')
         this.divContainer.className = 'selectDivContainer'
