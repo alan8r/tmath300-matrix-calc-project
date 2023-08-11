@@ -265,9 +265,9 @@ class Matrix {
 }
 
 
-  isConsistent() {
-    let determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(1,2) * this.getElemAt(2,1));
-
+  isConsistent(matrix) {
+  const det = this.determinant(matrix)
+  
     if (determinant != 0){
       return false;
     }

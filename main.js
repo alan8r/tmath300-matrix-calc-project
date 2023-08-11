@@ -111,20 +111,16 @@ matrixOperationsTests = function() {
   console.debug('######################')
 
   //test for inverse method
-  console.debug('### INVERSE TEST ###')
-  let invMatrix = new Matrix(2,2,'asc')
-
-  console.debug(invMatrix.toString())
-  console.debug()
-  console.debug(invMatrix.inverse().toString())
-
-  // Example usage
-
   testMatrix = new Matrix (2, 2, 'asc')
   testMatrixI = new Matrix()
   testMatrix.isSingular(testMatrix.array)
 
 console.log(testMatrix.isSingular(testMatrix.array).toString())
+
+//test is Consistent method
+testMatrix.isConsistent(testMatrix.array)
+
+console.log(testMatrix.isConsistent(testMatrix.array).toString())
 
 
 }

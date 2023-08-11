@@ -90,7 +90,11 @@ generateMatrixControls = function() {
           if (bTable == matrixTable) {
             let alertMessage = `MATRIX PROPERTIES:\n
               Is square?   ${matrix.isSquare()}
-              ...
+              \n  
+              Is Singular? ${matrix.isSingular(matrix)}
+              \n
+              Determinant: ${matrix.determinant(matrix)} //being implemented but not outputting proper integers
+              
               `
               alert(alertMessage)
           }
