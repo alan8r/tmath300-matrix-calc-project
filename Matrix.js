@@ -113,7 +113,7 @@ class Matrix {
 
   // Add 'this' Matrix to parameter 'matrix' and return new Matrix as result
   add(matrix) {
-    if (this.rows != matrix.rows && this.cols != matrix.cols) {
+    if (this.rows != matrix.rows || this.cols != matrix.cols) {
       console.error("Cannot add matrices of different sizes")
       alert("Can't add matrices with different dimensions!")
       return
@@ -129,7 +129,7 @@ class Matrix {
   // Subtract 'this' matrix from parameter 'matrix' and return new Matrix as result
   subtract(matrix) {
     // check to see if rows/columns match
-    if (this.rows != matrix.rows && this.cols != matrix.cols) {
+    if (this.rows != matrix.rows || this.cols != matrix.cols) {
       console.error("Cannot add matrices of different sizes")
       alert("Can't subtract matrices with different dimensions!")
       return
@@ -179,6 +179,35 @@ class Matrix {
     
     // copy result matrix in to returnMatrix.array
     returnMatrix.array = result.slice()
+    return returnMatrix
+  }
+
+  // working (?) multiply
+  multiply2(matrix) {
+    if (this.rows != matrix.cols && this.cols != matrix.rows) {
+      console.error("Cannot multiply matrices with dimension mismatch")
+      alert("Cannot multiply matrices with dimension mismatch")
+      return
+    }
+
+    var aNumRows = this.array.length, 
+        aNumCols = this.array[0].length,
+        bNumCols = matrix.array[0].length,
+        m = new Array(aNumRows)
+    for (var r = 0; r < aNumRows; ++r) {
+      m[r] = new Array(bNumCols);
+      for (var c = 0; c < bNumCols; ++c) {
+        m[r][c] = 0
+        for (var i = 0; i < aNumCols; ++i) {
+          m[r][c] += this.array[r][i] * matrix.array[i][c]
+        }
+      }
+    }
+
+    let returnMatrix = new Matrix(m.length, m[0].length)
+    console.log(m)
+    returnMatrix.array = m
+    
     return returnMatrix
   }
 

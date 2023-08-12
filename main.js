@@ -59,9 +59,9 @@ function main() {
     else if (selectChoice == 1)
       resultMatrix = defaultMatrix.subtract(secondMatrix)
     else if (selectChoice == 2)
-      resultMatrix = defaultMatrix.multiply(secondMatrix)
+      resultMatrix = defaultMatrix.multiply2(secondMatrix)
     else if (selectChoice == 3)
-      resultMatrix = secondMatrix.multiply(defaultMatrix)
+      resultMatrix = secondMatrix.multiply2(defaultMatrix)
 
     if (resultMatrix) {
       console.debug('Calculation result:\n'+resultMatrix.toString())
@@ -118,9 +118,9 @@ matrixOperationsTests = function() {
 
   // test for the Matrix.multiply method
   console.debug('### MULTIPLY TEST ###')
-  let aMult = new Matrix(3,3,'asc'),
-      bMult = new Matrix(3,2,'asc'),
-      cMult = aMult.multiply(bMult)
+  let aMult = new Matrix(3,2,'asc'),
+      bMult = new Matrix(2,3,'asc'),
+      cMult = aMult.multiply2(bMult)
   console.debug('matrix A:\n'+aMult.toString())
   console.debug('matrix B:\n'+bMult.toString())
   console.debug('A * B:\n'+cMult.toString())
