@@ -1,5 +1,28 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100);
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+html {
+    font-family: 'Roboto';
+    font-weight: 100;
+}
+
 body {
-    background-color: #555;
+    margin-top: 1em;
+    font-size: 2em;
+    background-color: #bbb;
 }
 
 table {
@@ -27,7 +50,12 @@ button.calculate-button{
     font-weight: bold;
     font-size: 15px;
     cursor:pointer;
-    margin-left: 8px;
+    margin: 0;
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
 }
 
 .calculate-button:hover{
@@ -57,36 +85,51 @@ button.calculate-button:hover {
 }
 
 div#main_container {
-    border: solid 1px #000;
-    padding: 5px;
+    padding: 55px;
     display: flex;
 }
 
 div#results_container {
-    border: solid 1px #000;
     padding: 20px;
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 div.selectDivContainer {
-    border: solid 1px #000;
-    background-color: #999;
-    text-align: center;
-    margin-top: 10%;
-    height: 10%;
+    color:rgb(0, 0, 0);
+   
+    font-weight: bold;
+    font-size: 15px;
+    cursor:pointer;
+    margin: 0;
+
 }
 
 select.selectMatrixOp {
+    
     text-align: center;
+    background-color: #000;
+    color:white;
+    border-radius: 18px;
+
 }
 
 div#main_container div.tableContainer {
-    border: solid 1px #000;
-    text-align: center;
+    display: block;
+    margin: 0 auto;
+    max-width: auto;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    border-radius: 35px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #FFF;
+    border: 3px solid gray;
+    top: 0;
 }
 
 div.matrixControl {
-    background-color: #999;
     border: solid 0px #000;
     margin: 10px;
     padding: 10px;
@@ -105,10 +148,15 @@ button.controlButtons {
 }
 
 td input {
-    border: solid 0px #000;
-    text-align: center;
-    font: 16pt monospace;
-    background-color: #999;
+            box-sizing: border-box;
+                text-align: center;
+                cursor: pointer;
+                width: 25%;
+                background-color: #ccc;
+                line-height: 2em;
+                border-top: 0.01em solid #333;
+                border-left: 0.01em solid #333;
+
 }
 
 td input:disabled {
@@ -135,4 +183,12 @@ td input:hover {
 td input:focus-within {
     background-color: #9f9;
     outline: none;
+}
+
+.result{
+    font-size:17px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
