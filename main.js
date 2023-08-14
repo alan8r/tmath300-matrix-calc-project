@@ -139,7 +139,7 @@ matrixOperationsTests = function() {
   console.debug('matrix B^T:\n'+bbTpose.toString())
   console.debug('######################')
 
-  //test for inverse method
+  //test for isSingular method
   testMatrix = new Matrix (2, 2, 'asc')
   testMatrixI = new Matrix()
   testMatrix.isSingular(testMatrix.array)
