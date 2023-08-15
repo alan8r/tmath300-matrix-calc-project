@@ -141,37 +141,38 @@ class Matrix {
           returnMatrix.array[i][j] = this.array[i][j] - matrix.array[i][j]
       return returnMatrix
     }
-  
+
     // Multiply (crossmultiply) 'this' Matrix with parameter 'matrix' and return new Matrix as result
     multiply(matrix) {
       
-      let row1 = this.array.length;
-      let columns1 = this.array[0].length;
-      let row2 = matrix.array.length;
-      let columns2 = matrix.array[0].length;
+      let matrixA = this.array
+      let matrixB = matrix.array
+      const numRowsA = matrixA.length;
+      const numColsA = matrixA[0].length;
+      const numRowsB = matrixB.length;
+      const numColsB = matrixB[0].length;
+  
+      if (numColsA !== numRowsB) {
+        return alert("Matrix dimensions do not properly match for cross-multiplication!")
+        // throw new Error("Invalid matrix dimensions for multiplication.");
+      }
       
-      let result = [];
-      for (let j = 0; j < row2; j++) {
-        result.push([]);  
+      const result = new Array(numRowsA);
+      for (let i = 0; i < numRowsA; i++) {
+        result[i] = new Array(numColsB).fill(0);
       }
   
-      let summation = 0;
-  
-      for(let i = 0; i < row1; i++) {
-        for (let j = 0; j < columns2; j++) {
-          for (let k = 0; k < columns1; k++ ) {
-            summation = summation + this.array[i][k] * matrix.array[k][j];
+      for (let i = 0; i < numRowsA; i++) {
+        for (let j = 0; j < numColsB; j++) {
+          for (let k = 0; k < numColsA; k++) {
+            result[i][j] += matrixA[i][k] * matrixB[k][j];
           }
-          result[i][j] = summation;
-          summation = 0
         }
       }
-  
-      let returnMatrix = new Matrix(result.length, result[0].length)
       
-      // copy result matrix in to returnMatrix.array
-      returnMatrix.array = result.slice()
-      return returnMatrix
+      let resultMatrix = new Matrix(result.length, result[0].length)
+      resultMatrix.array = result
+      return resultMatrix;
     }
   
     // returns whether the Matrix is square (rows == cols)
