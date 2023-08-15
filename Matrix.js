@@ -70,84 +70,27 @@ class Matrix {
     }
     return returnMatrix
   }
-
   
-  multiply(matrix) {
-    // multiply this with matrix (crossproduct)
-    
-    var row1 = this.array.length;
-
-    var columns1 = this.array[0].length;
-
-    var row2 = matrix.array.length;
-
-    var columns2 = matrix.array[0].length;
-
-    
-    var result = [];
-    for (let j = 0; j < row2; j++) {
-      result.push([]);  
+  multiply(matrix){
+    if (this.cols !== matrix.rows) {
+        console.log("Invalid matrix dimensions for multiplication");
+        return;
     }
-    
-    // var result = new Array(row1, row2)
 
-    var summation = 0;
+    const result = new Matrix(this.rows, this.cols);
 
-    console.log('row1: ',row1,'row2: ',row2,'columns2: ',columns2)
-
-    for(var i = 0; i < row1; i++) {
-
-      for (var j = 0; j < columns2; j++) {
-
-        for (var k = 0; k < columns1; k++ ) {
-          summation = summation + this.array[i][k] * matrix.array[k][j];
+    for (let i = 0; i < this.rows; i++) {
+        for (let j = 0; j < this.cols; j++) {
+            let sum = 0;
+            for (let k = 0; k < this.cols; k++) {
+                sum += this.array[i][k] * matrix.array[k][j];
+            }
+            result.array[i][j] = sum;
         }
-
-        console.log(result[i][j])
-        console.log(summation)
-        result[i][j] = summation;
-        
-        summation = 0
-      }
-    }
-    return result
-  }
-
-  multiply(matrix1, matrix2){
-
-    var row1 = matrix1.length;
-
-    var columns1 = matrix1[0].length;
-
-    var row2 = matrix2.length;
-
-    var columns2 = matrix2[0].length;
-
-    var result = new Array(row1,row2);
-
-    var summation = 0;
-
-    for(var i = 0; r < row1; i++) {
-
-      for (var j = 0; j < columns2; j++) {
-
-        for (var k = 0; k < columns1; k++ ) {
-
-          summation = summation + matrix1[i][k] * matrix2[k][j];
-      }
-
-      result[i][j] = summation;
-
-      summation = 0
-
     }
 
-  }
     return result;
-
-}
-
-
+  }
   isSquare() {
     return (this.rows == this.cols)
   }

@@ -40,7 +40,7 @@ function main() {
       matrixTestTable2 = new MatrixTable(matrixTest2, 'main_container')
 
   // TODO: FIX MATRIX MULTIPLY STUFF
-  /*
+  
   let matrixMult1 = new Matrix(1, 2),
       matrixMult2 = new Matrix(2, 1)
 
@@ -48,7 +48,7 @@ function main() {
   console.log(matrixMult1.toString())
   console.log(matrixMult2.toString())
   console.log(matrixMult1.multiply(matrixMult2).toString())
-  */
+  
 }
 
 /*
