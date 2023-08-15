@@ -87,20 +87,25 @@ generateMatrixControls = function() {
          matrices.forEach(matrix=>{
           let matrixTable = matrix.tableDOM.getTable()
           console.log(bTable == matrixTable)
+          
+          det = null
+          
+          if (matrix.isSquare()) det = matrix.determinant(matrix.array)
+          
           if (bTable == matrixTable) {
             
             let alertMessage = `MATRIX PROPERTIES:\n
               Is square?   ${matrix.isSquare()}
+              \n
+              --  Determinant?   ${det}
               \n  
-              Is Singular? ${matrix.isSingular(matrix.array)}
+              Is Singular?   ${matrix.isSingular(matrix.array)}
               \n
-              Is Consistent? ${matrix.isConsistent(matrix.array)}
+              Is Consistent?   ${matrix.isConsistent(matrix.array)}
               \n
-              DET: ${matrix.determinant(matrix.array)}
-              
-              `
-              alert(alertMessage)
-              
+            `
+
+            alert(alertMessage)
           }
         })
       }
