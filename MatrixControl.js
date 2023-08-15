@@ -92,9 +92,11 @@ generateMatrixControls = function() {
             let alertMessage = `MATRIX PROPERTIES:\n
               Is square?   ${matrix.isSquare()}
               \n  
-              Is Singular? ${matrix.isSingular(matrix.array).toString()}
+              Is Singular? ${matrix.isSingular(matrix.array)}
               \n
-              Is Consistent? ${matrix.isConsistent(matrix.array).toString()}     
+              Is Consistent? ${matrix.isConsistent(matrix.array)}
+              \n
+              DET: ${matrix.determinant(matrix.array)}
               
               `
               alert(alertMessage)

@@ -236,30 +236,30 @@ class Matrix {
     return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
   }
   
-     determinant(matrix) {
-    const n = matrix.length;
-  
+  determinant(matrix) {
+    let n = matrix.length;
+    console.debug('###n: ',n)
     if (n === 1) {
         return matrix[0][0];
     } else if (n === 2) {
         return this.determinant2x2(matrix);
     } else {
-        let det = 0;
-        for (let i = 0; i < n; i++) {
-            const minorMatrix = [];
-            for (let j = 1; j < n; j++) {
-                const row = matrix[j].slice(0, i).concat(matrix[j].slice(i + 1));
-                minorMatrix.push(row);
-            }
-            det += matrix[0][i] * this.determinant(minorMatrix) * Math.pow(-1, i);
-        }
-        return det;
+      let det = 0;
+      for (let i = 0; i < n; i++) {
+          const minorMatrix = [];
+          for (let j = 1; j < n; j++) {
+              const row = matrix[j].slice(0, i).concat(matrix[j].slice(i + 1));
+              minorMatrix.push(row);
+          }
+          det += matrix[0][i] * this.determinant(minorMatrix) * Math.pow(-1, i);
+      }
+      return det;
     }
   }
-  
+
   // Check if a matrix is singular (non-invertible) based on its determinant
-      isSingular(matrix) {
-    const det = this.determinant(matrix);
+  isSingular(matrix) {
+    let det = this.determinant(matrix);
     console.log('determinant: ' + det.toString())
     return det === 0;
   }
