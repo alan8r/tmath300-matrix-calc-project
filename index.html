@@ -7,11 +7,27 @@
     <script type="text/javascript" src="main.js"></script>
     <script type="text/javascript" src="Matrix.js"></script>
     <script type="text/javascript" src="MatrixTable.js"></script>
+    <script type="text/javascript" src="MatrixOpSelector.js"></script>
+    <script type="text/javascript" src="MatrixControl.js"></script>
     <link rel="stylesheet" href="default.css" />
     <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
   </head> 
   <body>
+    <p class="title">
+      Matrix Calculator
+    </p>
+    <p class ="author">
+      Authors: Alan Thompson, Lwazi, Michael Mapanao
+    </p>
+
     <script>document.body.onload=main</script>
-    <div id="main_container"></div>
+    <div id="outer">
+      <div id="main_container"></div>
+    </div>
+    <button id="calculate" class="calculate-button">Calculate</button>
+    <br />
+    <h1 class = "result">Calculation Result:</h1>
+    <br />
+    <div id="results_container"></div>
   </body>
 </html>

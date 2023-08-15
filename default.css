@@ -1,55 +1,202 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:100);
+
+html {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: inherit;
+    -moz-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+html {
+    font-family: 'Roboto';
+    font-weight: 100;
+}
+
 body {
-    background-color: #333;
+    margin-top: 1em;
+    font-size: 2em;
+    background-color: #bbb;
 }
 
 table {
     margin: 10px;
-    border: solid 1px #000;
+    margin-top: 0px;
+    /* background-color: #999; */
+    border: solid 0px #000;
     display: block;
 }
 
 td {
-    border: solid 1px #000;
-    color: #fff;
+    border: solid 0px #000;
     text-align: center;
-    
+    padding: 0px;
+    margin: 0px;
 }
 
-td.topExtra {
-    padding: 10px;
-    margin: 10px;
+button.calculate-button{
+    background-color: rgb(173, 173, 173);
+    color:rgb(0, 0, 0);
+    border: none;
+    height: 36px;
+    width: 90px;
+    border-radius: 18px;
+    font-weight: bold;
+    font-size: 15px;
+    cursor:pointer;
+    margin: 0;
+        position: absolute;
+        top: 20%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+}
+
+.calculate-button:hover{
+    opacity:.8;
+    }
+    
+    .calculate-button:active{
+    opacity:.6;
+    }
+
+.title{
+font-family: Arial;
+font-size: 20px;
+text-align:center;
+margin-bottom: 0px;
+}
+
+.author{
+    font-family: Arial;
+    font-size: 10px;
+    text-align:center;
+    margin-top:6px;
+}
+    
+button.calculate-button:hover {
+    background-color: #ddd;
 }
 
 div#main_container {
-    border: solid 1px #000;
-    padding: 5px;
+    padding: 55px;
     display: flex;
 }
 
-input {
-    border: solid 1px #fff;
-    padding: 3px;
-    text-align: center;
-    width: 24pt;
-    height: auto;
-    
-    font-size: 18pt;
-    font-family: monospace;
+div#results_container {
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-input.matrixSize {
-    width: 20pt;
+div.selectDivContainer {
+    color:rgb(0, 0, 0);
+   
+    font-weight: bold;
+    font-size: 15px;
+    cursor:pointer;
+    margin: 0;
+
+}
+
+select.selectMatrixOp {
+    
+    text-align: center;
+    background-color: #000;
+    color:white;
+    border-radius: 18px;
+
+}
+
+div#main_container div.tableContainer {
+    display: block;
+    margin: 0 auto;
+    max-width: auto;
+    height: 100%;
+    background-color: rgb(0, 0, 0);
+    border-radius: 35px;
+    padding: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    color: #FFF;
+    border: 3px solid gray;
+    top: 0;
+}
+
+div.matrixControl {
+    border: solid 0px #000;
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    font: 12pt monospace;
+    display: flex;
+    
+}
+
+div.buttonControls div{
+    display: flex;
+    
+}
+
+button.controlButtons {
+    width: 80px;
+    margin-left: 10px;
+    cursor: pointer;
+    
+}
+
+td input {
+            box-sizing: border-box;
+                text-align: center;
+                cursor: pointer;
+                width: 25%;
+                background-color: #ccc;
+                line-height: 2em;
+                border-top: 0.01em solid #333;
+                border-left: 0.01em solid #333;
+
+}
+
+td input:disabled {
+    color: #000;
+    background-color: #aaa;
+}
+
+input.controls {
+    border: solid 1px #000;
+    width: 50px;
+    margin: 1px;
+    text-align: center;
+    font: 12pt monospace;
     height: auto;
     border: none;
-}
-
-input:focus-within {
-    background-color: #ff9;
     outline: none;
 }
 
-button{
-    font-size: 16pt;
-    font-family: monospace;
-    width: 25pt;
+
+td input:hover {
+    background-color: #aaa;
 }
+
+td input:focus-within {
+    background-color: #9f9;
+    outline: none;
+}
+
+.result{
+    font-size:17px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+

@@ -1,164 +1,155 @@
 /*
     main.js
-    Main codefile/entrypoint. App starts running from here.
+      Main codefile/entrypoint. 
+      webapp effectively starts running from here after the index.html is opened/loaded.
 */
 
-let test; // test array
+// flag to cause certain tests and other debugging features to run and enable
+const DEBUG = true
 
-let matrix1, matrix2;
+if (!DEBUG) console.debug = () => undefined
 
-let matrixTest1, matrixTest2;
+const DEFAULTS = {
+  rows: 3,
+  cols: 3,
+  cellWidth: 50,
+  cellHeight: 50,
+  cellPadding: 0
+}
+
+let matrices = [],
+    matrixControls = [],
+    matrixOpControls = []
 
 function main() {
-  
-  test = new Matrix(3, 5)
-  
-  // console.log(`Rows: ${test.sizeRows()}\nCols: ${test.sizeCols()}`)
-  // console.log(`Is square?: ${test.isSquare()}`)
 
-  matrix1 = new Matrix(3,3);
+  // generate and append the initial matrix to our matrices collection
+  defaultMatrix = new Matrix(DEFAULTS.rows, DEFAULTS.cols+1, 'asc')
+  matrices.push(defaultMatrix)
+  defaultMatrix.generateMatrixTable('main_container')
 
-  matrix2 = new Matrix(3,3);
+  defaultOpSelector = new MatrixOpSelector()
+  matrixOpControls.push(defaultOpSelector)
 
-  let matrix3 = matrix1.add(matrix2);
-  console.log(matrix1.toString())
-  console.log(matrix2.toString())
-  console.log(matrix3.toString())
+  secondMatrix = new Matrix(4,3,'asc')
+  matrices.push(secondMatrix)
+  secondMatrix.generateMatrixTable('main_container')
 
-  let matrix4 = matrix1.subtract(matrix2);
-  console.log(matrix4.toString())
+  // generate and append the controls for each matrix
+  generateMatrixControls()
+  addMatrixControlsToPage('main_container')
 
-  let transposeTest = new Matrix(3, 2, 'asc')
+  document.getElementById('main_container').children[0].after(defaultOpSelector.divContainer)
+  // create the buttons for adding or removing matrices beyond our initial default
+  let buttonAddMatrix = document.createElement('button'),
+      buttonRemoveMatrix = document.createElement('button')
+  buttonCalculate = document.getElementById('calculate')
+ 
+  selectOperation = document.querySelector('select.selectMatrixOp')
 
-  console.log(transposeTest.toString())
-  console.log(transposeTest.transpose().toString())
-
-  matrixTest1 = new Matrix(2, 3, 'asc')
-  matrixTest2 = new Matrix(2, 3, 'asc')
-  
-  let matrixTestTable1 = new MatrixTable(matrixTest1, 'main_container'),
-      matrixTestTable2 = new MatrixTable(matrixTest2, 'main_container')
-
-  // TODO: FIX MATRIX MULTIPLY STUFF
-  
-  let matrixMult1 = new Matrix(1, 2),
-      matrixMult2 = new Matrix(2, 1)
-
-  console.log('MULTIPLY:')
-  console.log(matrixMult1.toString())
-  console.log(matrixMult2.toString())
-  console.log(matrixMult1.multiply(matrixMult2).toString())
-  
-}
-
-/*
-function addMatrix(matrix, parentDivID, newTableID='') {
-  let rows = matrix.sizeRows(),
-      cols = matrix.sizeCols()
-
-  let table = document.createElement('table')
-  table.id = newTableID
-  matrix.tableDOM = table
-
-  for (let i=0; i <= rows; i++) {
-    // extra run of loop to add the buttons to the table
-    if (i>=rows) {
-      // create all the needed html DOM elements
-      let trTop = document.createElement('tr'),
-          tdTop = document.createElement('td'),
-          inputRows = document.createElement('input'),
-          inputCols = document.createElement('input')
-          
-      
-      // set up the DOM elements properties before appending them
-      tdTop.innerHTML = 'Rows/Cols:<br />'
-      inputRows.className = 'matrixSize'
-      inputCols.className = 'matrixSize'
-      inputRows.value = matrix.rows
-      inputCols.value = matrix.cols
-      tdTop.colSpan = matrix.cols
-      tdTop.className = 'topExtra'
-      tdTop.appendChild(inputRows)
-      inputRows.after(' x ')
-      tdTop.appendChild(inputCols)
-      trTop.appendChild(tdTop)
-      table.children[0].before(trTop)
-          
-      let storeOldValue = function() {
-        this.oldValue = this.value
-      }
-
-      let changeRow = function() {
-        if (isNaN(Number(this.value)) || this.value < 1) {
-          this.value = this.oldValue
-          alert("ERROR: Invalid input! Dimension must be a non-zero integer.");
-        } else {
-
-          let newRows = Math.floor(this.value)
-
-          let newMatrix = new Matrix(newRows, matrix.cols)
-          newMatrix.add(matrix)
-          matrix = newMatrix
-          addMatrix(matrix, parentDivID, newTableID)
-          let parentDiv = document.getElementById(parentDivID)
-          parentDiv.getElementsByTagName('table')[0].remove()
-
-          console.log('row count changed to',this.value)
-        }
-      }
-
-      let changeCol = function() {
-        if (isNaN(Number(this.value))) {
-          this.value = this.oldValue
-          alert("ERROR: Invalid input! Dimension must be a non-zero integer.");
-        } else {
-
-        }
-      }
-
-      inputRows.onfocus = inputCols.onfocus = storeOldValue
-      inputRows.onchange = changeRow
-      inputCols.onchange = changeCol
-
-      // used to disable buttons until click handlers are finished
-      
-      
-      // used so I dont have to wrap everything after the 'if' clause in an 'else'
-      continue
-    }
-
-    let tr = document.createElement('tr')
-    tr.id = i
-
-    for (let j=0; j < cols; j++) {
-      
-      let td = document.createElement('td'),
-          input = document.createElement('input')
-      
-      input.value = matrix.array[j][i]
-      
-      // validate the input after user "clicks out" of input field, if valid then update the Matrix object
-      input.onchange = function() {
-        
-        if (isNaN(Number(input.value))) {
-          input.value = matrix.array[j][i]
-          alert("ERROR: Invalid input! Matrix can only hold numbers.")
-        } else {
-          input.value = Number(input.value)
-          matrix.array[j][i] = Number(input.value)
-          console.log("Matrix changed:")
-          console.log(matrix.toString())
-        }
-      }
-
-      td.appendChild(input)
-      tr.appendChild(td)
-      
-    }
-
-    table.appendChild(tr)
-    document.getElementById(parentDivID).appendChild(table)
+  buttonCalculate.onclick = function() {
+    selectOperation = document.querySelector('select.selectMatrixOp')
     
+    let resultMatrix = null;
+
+    let selectChoice = selectOperation.selectedIndex
+
+    if (selectChoice == 0)
+      resultMatrix = defaultMatrix.add(secondMatrix)
+    else if (selectChoice == 1)
+      resultMatrix = defaultMatrix.subtract(secondMatrix)
+    else if (selectChoice == 2)
+      resultMatrix = defaultMatrix.multiply(secondMatrix)
+    else if (selectChoice == 3)
+      resultMatrix = secondMatrix.multiply(defaultMatrix)
+
+    if (resultMatrix) {
+      console.debug('Calculation result:\n'+resultMatrix.toString())
+      divResults = document.querySelector('div#results_container')
+      if (divResults.firstChild)
+        divResults.firstChild.remove()
+      resultMatrix.generateMatrixTable('results_container', false)
+    }
   }
+
+  matrixOperationsTests()
+
 }
-*/
+
+
+// much more readability than having 'document.createElement' everywhere
+function htmlObj(tag) {
+  return document.createElement(tag);
+}
+
+// helper method for adding new matrices to the page
+addNewMatrixToPage = function(matrix, parentId) {
+  if (matrix.tableDOM===null) {
+    matrix.generateMatrixTable(parentId)
+    console.log('created new matrix table')
+  }
+  matrices.push(matrix)
+  generateMatrixControls()
+  addMatrixControlsToPage(parentId)
+}
+
+// helper method for testing different Matrix operations/methods
+matrixOperationsTests = function() {
+  
+  // test for the Matrix.add method
+  console.debug('### ADD TEST ###')
+  let aAdd = new Matrix(2,4,'rand'),
+      bAdd = new Matrix(2,4,'asc'),
+      cAdd = aAdd.add(bAdd)
+  console.debug('matrix A:\n'+aAdd.toString())
+  console.debug('matrix B:\n'+bAdd.toString())
+  console.debug('A + B:\n'+cAdd.toString())
+  console.debug('################')
+
+  // test for the Matrix.subtract method
+  console.debug('### SUBTRACT TEST ###')
+  let aSub = new Matrix(2,4,'rand'),
+      bSub = new Matrix(2,4,'asc'),
+      cSub = aSub.subtract(bSub)
+  console.debug('matrix A:\n'+aSub.toString())
+  console.debug('matrix B:\n'+bSub.toString())
+  console.debug('A - B:\n'+cSub.toString())
+  console.debug('#####################')
+
+  // test for the Matrix.multiply method
+  console.debug('### MULTIPLY TEST ###')
+  let aMult = new Matrix(3,3,'asc'),
+      bMult = new Matrix(3,2,'asc'),
+      cMult = aMult.multiply(bMult)
+  console.debug('matrix A:\n'+aMult.toString())
+  console.debug('matrix B:\n'+bMult.toString())
+  console.debug('A * B:\n'+cMult.toString())
+  console.debug('#####################')
+
+  // test for the Matrix.transpose method
+  console.debug('### TRANSPOSE TEST ###')
+  let aTpose = new Matrix(3,2,'asc'),
+      aaTpose = aTpose.transpose(),
+      bTpose = new Matrix(3,3,'asc'),
+      bbTpose = bTpose.transpose()
+      
+  console.debug('matrix A:\n'+aTpose.toString())
+  console.debug('matrix A^T:\n'+aaTpose.toString())
+  console.debug('matrix B:\n'+bTpose.toString())
+  console.debug('matrix B^T:\n'+bbTpose.toString())
+  console.debug('######################')
+
+  //test for isSingular method
+  testMatrix = new Matrix (2, 2, 'asc')
+  testMatrixI = new Matrix()
+  testMatrix.isSingular(testMatrix.array)
+
+console.log(testMatrix.isSingular(testMatrix.array).toString())
+
+//test is Consistent method
+testMatrix.isConsistent(testMatrix.array)
+
+console.log(testMatrix.isConsistent(testMatrix.array).toString())
+
+
+}
