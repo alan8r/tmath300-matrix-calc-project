@@ -7,13 +7,25 @@
 class Matrix {
 
     constructor(rows, cols, mode='default') {
+      // an attribute in the object to store the rows and columns
       this.rows = rows
       this.cols = cols
   
+      // a reference to get from the matrix object to the on-screen HTML DOM elements that represent
+      // the matrix object
       this.tableDOM = null
       
       this.array = [];
       
+      /* 
+          Initialize the 2d array that will store the actual matrix values
+          by default, the "mode" parameter can be left blank or a few different modes can be set that determine
+          what values the matrix is initialized containing.
+          Modes are:
+            'asc'   -- inserts ascending values starting with 1 in to each matrix cell, wraps per row
+            'desc'  -- similar to 'asc', but in descending order instead of ascending
+            'rand'  -- Sets a random value between 0 and 99 in each matrix cell
+      */
       let val = 0;
       for (let i = 0; i < rows; i++) {
         this.array.push([])
@@ -30,12 +42,24 @@ class Matrix {
       }
     }
   
-  
+    
+    // A helper method for resizing the rows of the matrix when the user scales the size down
     resizeRows(newRows) {
+      
+      // check to make sure the matrix has a minimum of 1 row
       if (newRows < 1) {
         console.error("array rows can not be smaller than 1")
         return 0
       }
+
+      /* 
+        There are effectively 2 cases for resizing the matrix rows
+          case 1: row count is decreasing
+          case 2: row count is increasing
+        The following if branch handles those two cases, as different actions are required to scale
+        the matrix larger or smaller
+      */
+
       if (newRows < this.rows) {
         console.log('rows resize, newRows < rows')
         for (let i = 0; i < (this.rows - newRows); i++)
@@ -48,11 +72,18 @@ class Matrix {
           }
         }
       }
+
       this.rows = newRows
+
+      // method returns 1 if successful
       return 1
     }
   
+
+    
+    // A helper method similar to the resizeRows method above, but for changing the number of columns the matrix has
     resizeCols(newCols) {
+      
       if (newCols < 1) {
         console.error("array cols can not be smaller than 1")
         return 0
@@ -119,10 +150,14 @@ class Matrix {
   
     // Add 'this' Matrix to parameter 'matrix' and return new Matrix as result
     add(matrix) {
+      
+      // First we check to see if the dimensions of both matrices we are operating on are matching
+      // as required by the definition of matrix addition
       if (this.rows != matrix.rows && this.cols != matrix.cols) {
         console.error("Cannot add matrices of different sizes")
         return
       }
+
       let returnMatrix=new Matrix(this.rows, this.cols)
       
       for (let i = 0; i < this.rows; i++)
