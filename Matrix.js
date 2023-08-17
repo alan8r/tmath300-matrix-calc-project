@@ -223,25 +223,36 @@ class Matrix {
       return result
     }
   
+    // determinant2x2 used to return the determinant (using the ad - bc formula)
     determinant2x2(matrix) {
       return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
   
+    /**
+     *The determinant method calculates the determinant a given matrix. 
+     */
   determinant(matrix) {
-    
+    //checks if matrix is square, since determinants cannot
+    // be retreived from a non nxn matrix.
     if (!this.isSquare()) {
       console.error("Can't get DET of non-square matrix")
       return
     }
 
+    // n = the nxn length of a matrix
     let n = matrix.length;
 
+    // if matrix is 1x1, return that number
     if (n === 1) {
         return matrix[0][0];
+
+        // if matrix is 2x2, use determinant2x2 method
     } else if (n === 2) {
         return this.determinant2x2(matrix);
     } else {
       let det = 0;
+
+      // formula to determine determinant if matrix is > or equal to 3x3 size.
       for (let i = 0; i < n; i++) {
           const minorMatrix = [];
           for (let j = 1; j < n; j++) {
@@ -255,9 +266,19 @@ class Matrix {
   }
 
   // Check if a matrix is singular (non-invertible) based on its determinant
+  /**
+   *  How it works: Uses the isNonSingular method as its baseline. It 
+   * returns the opposite of isNonSingular.
+   * */
+
   isSingular() {
     return !this.isNonSingular()
   }
+
+  /**
+   * @returns true if the matrix is a nxn matrix, and if the determinant is non-zero, the matrix
+   * is declared nonsingular and invertible.
+   */
 
   isNonSingular() {
     if (!this.isSquare()) {
@@ -266,7 +287,13 @@ class Matrix {
     return (this.isSquare()) && (this.determinant(this.array)!=0)
   }
   
-  
+  /**
+   * @param {*} matrix (takes in a matrix)
+   * @returns true or false depending on the matrix
+   * How it works: by finding the determinant of the given matrix,
+   * if the determinant is non-zero the matrix is considered consistent.
+   * The isConsistent method has a direct correlation to if a matrix is Singular.
+   */
     isConsistent(matrix) {
     const det = this.determinant(matrix)
     
@@ -277,11 +304,11 @@ class Matrix {
         false}
     }
   
-  
-    rank() {
-      //return the rank of the matrix
-    }
-  
+    /** Nullspace method converts the matrix into reduced row echelon form
+     * from there it calculates nullspace 
+     * 
+     * 
+     */
     nullSpace(matrix) {
       const numeric = require('numeric');
   
@@ -294,14 +321,15 @@ class Matrix {
       return nullSpace;
       
     }
-  
+    // zeroArray method makes every element of the array/ matrix become zero.
     zeroArray() {
       for (let i = 0; i < this.array.length; i++)
         for (let j = 0; j < this.array[i].length; j++)
           this.array[i][j] = 0
       
     }
-  
+
+    //converts array to readable text.
     toString() {
       let sb = ""
       this.array.forEach(row=>sb+=row.toString().split(',').join('\t')+'\n')
