@@ -141,37 +141,38 @@ class Matrix {
           returnMatrix.array[i][j] = this.array[i][j] - matrix.array[i][j]
       return returnMatrix
     }
-  
+
     // Multiply (crossmultiply) 'this' Matrix with parameter 'matrix' and return new Matrix as result
     multiply(matrix) {
+
+      let matrixA = this.array
+      let matrixB = matrix.array
+      const numRowsA = matrixA.length;
+      const numColsA = matrixA[0].length;
+      const numRowsB = matrixB.length;
+      const numColsB = matrixB[0].length;
+  
+      if (numColsA !== numRowsB) {
+        return alert("Matrix dimensions do not properly match for cross-multiplication!")
+        // throw new Error("Invalid matrix dimensions for multiplication.");
+      }
       
-      let row1 = this.array.length;
-      let columns1 = this.array[0].length;
-      let row2 = matrix.array.length;
-      let columns2 = matrix.array[0].length;
-      
-      let result = [];
-      for (let j = 0; j < row2; j++) {
-        result.push([]);  
+      const result = new Array(numRowsA);
+      for (let i = 0; i < numRowsA; i++) {
+        result[i] = new Array(numColsB).fill(0);
       }
   
-      let summation = 0;
-  
-      for(let i = 0; i < row1; i++) {
-        for (let j = 0; j < columns2; j++) {
-          for (let k = 0; k < columns1; k++ ) {
-            summation = summation + this.array[i][k] * matrix.array[k][j];
+      for (let i = 0; i < numRowsA; i++) {
+        for (let j = 0; j < numColsB; j++) {
+          for (let k = 0; k < numColsA; k++) {
+            result[i][j] += matrixA[i][k] * matrixB[k][j];
           }
-          result[i][j] = summation;
-          summation = 0
         }
       }
-  
-      let returnMatrix = new Matrix(result.length, result[0].length)
       
-      // copy result matrix in to returnMatrix.array
-      returnMatrix.array = result.slice()
-      return returnMatrix
+      let resultMatrix = new Matrix(result.length, result[0].length)
+      resultMatrix.array = result
+      return resultMatrix;
     }
   
     // returns whether the Matrix is square (rows == cols)
@@ -187,81 +188,47 @@ class Matrix {
       return result
     }
   
-    inverse() {
-      //create 2d array temp
-      let a = this.getElemAt(1,1),
-       b = this.getElemAt(2,1),
-       c = this.getElemAt(1,2),
-       d = this.getElemAt(2,2),
-       determinant = (this.getElemAt(1,1) * this.getElemAt(2,2)) - (this.getElemAt(2,1) * this.getElemAt(1,2));
-       console.log(a.toString())
-       console.log(b.toString())
-       console.log(c.toString())
-       console.log(d.toString())
-       console.log(determinant.toString())
-       let temp = [];
-       for (let i = 0; i < this.rows; i++) {
-         temp[i] = [];
-         for (let j = 0; j < this.cols; j++) {
-             temp[i][j] = this.getElemAt(i+1,j+1);
-         }
-     }
-     this.array[0][0] = temp[1][1];  // annoying 
-     console.log("temp array ! :: " + temp);
-      // let returnMatrix=new Matrix(this.rows, this.cols)
+    determinant2x2(matrix) {
+      return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+    }
   
-      // console.log("return matrix: " + returnMatrix);
-      // console.log("end of reutn matrix");
-      // for (let i = 0; i < this.rows; i++){
-      //   for (let j = 0; j < this.cols; j++){
-      //        temp.push(i,j) = returnMatrix.getElemAt(i+1,j+1);
-      //      }
-      //    }
-  
-  
-      //   returnMatrix[0][0] = temp[2][1];
-      //    returnMatrix.getElemAt(1,1) = temp[0][0];
-  
-      //    returnMatrix.getElemAt(1,2) = -1;
-      //    returnMatrix.getElemAt(2,1)= -1;
-  
-      //  for (let i = 0; i < this.rows; i++)
-      //   for (let j = 0; j < this.cols; j++)
-      //    returnMatrix.array[i][j] = this.array[i][j] * (1/determinant)
-      //     return returnMatrix
-         return this.array;
-   }
-  
-   determinant2x2(matrix) {
-    return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-  }
-  
-     determinant(matrix) {
-    const n = matrix.length;
-  
+  determinant(matrix) {
+    
+    if (!this.isSquare()) {
+      console.error("Can't get DET of non-square matrix")
+      return
+    }
+
+    let n = matrix.length;
+
     if (n === 1) {
         return matrix[0][0];
     } else if (n === 2) {
         return this.determinant2x2(matrix);
     } else {
-        let det = 0;
-        for (let i = 0; i < n; i++) {
-            const minorMatrix = [];
-            for (let j = 1; j < n; j++) {
-                const row = matrix[j].slice(0, i).concat(matrix[j].slice(i + 1));
-                minorMatrix.push(row);
-            }
-            det += matrix[0][i] * this.determinant(minorMatrix) * Math.pow(-1, i);
-        }
-        return det;
+      let det = 0;
+      for (let i = 0; i < n; i++) {
+          const minorMatrix = [];
+          for (let j = 1; j < n; j++) {
+              const row = matrix[j].slice(0, i).concat(matrix[j].slice(i + 1));
+              minorMatrix.push(row);
+          }
+          det += matrix[0][i] * this.determinant(minorMatrix) * Math.pow(-1, i);
+      }
+      return det;
     }
   }
-  
+
   // Check if a matrix is singular (non-invertible) based on its determinant
-      isSingular(matrix) {
-    const det = this.determinant(matrix);
-    console.log('determinant: ' + det.toString())
-    return det === 0;
+  isSingular() {
+    return !this.isNonSingular()
+  }
+
+  isNonSingular() {
+    if (!this.isSquare()) {
+      return false
+    }
+    return (this.isSquare()) && (this.determinant(this.array)!=0)
   }
   
   

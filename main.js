@@ -64,7 +64,7 @@ function main() {
       resultMatrix = secondMatrix.multiply(defaultMatrix)
 
     if (resultMatrix) {
-      console.debug('Calculation result:\n'+resultMatrix.toString())
+      console.debug('Calculation result:\n',resultMatrix.toString())
       divResults = document.querySelector('div#results_container')
       if (divResults.firstChild)
         divResults.firstChild.remove()
