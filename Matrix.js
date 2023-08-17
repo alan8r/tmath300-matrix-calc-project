@@ -194,8 +194,7 @@ class Matrix {
     }
   
     /**
-     *The determinant method calculates a given matrix. 
-     *
+     *The determinant method calculates the determinant a given matrix. 
      */
   determinant(matrix) {
     //checks if matrix is square, since determinants cannot
@@ -242,7 +241,6 @@ class Matrix {
   }
 
   /**
-   * 
    * @returns true if the matrix is a nxn matrix, and if the determinant is non-zero, the matrix
    * is declared nonsingular and invertible.
    */
@@ -255,7 +253,6 @@ class Matrix {
   }
   
   /**
-   * 
    * @param {*} matrix (takes in a matrix)
    * @returns true or false depending on the matrix
    * How it works: by finding the determinant of the given matrix,
@@ -270,11 +267,6 @@ class Matrix {
       }
       else{return 
         false}
-    }
-  
-  
-    rank() {
-      //return the rank of the matrix
     }
   
     /** Nullspace method converts the matrix into reduced row echelon form
@@ -294,14 +286,15 @@ class Matrix {
       return nullSpace;
       
     }
-  
+    // zeroArray method makes every element of the array/ matrix become zero.
     zeroArray() {
       for (let i = 0; i < this.array.length; i++)
         for (let j = 0; j < this.array[i].length; j++)
           this.array[i][j] = 0
       
     }
-  
+
+    //converts array to readable text.
     toString() {
       let sb = ""
       this.array.forEach(row=>sb+=row.toString().split(',').join('\t')+'\n')
