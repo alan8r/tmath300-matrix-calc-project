@@ -205,34 +205,41 @@ class Matrix {
 
     // Multiply (crossmultiply) 'this' Matrix with parameter 'matrix' and return new Matrix as result
     multiply(matrix) {
-
+      // Get the arrays of the two matrices
       let matrixA = this.array
       let matrixB = matrix.array
+
+      // Get the dimensions of matrix A and matrix B
       const numRowsA = matrixA.length;
       const numColsA = matrixA[0].length;
       const numRowsB = matrixB.length;
       const numColsB = matrixB[0].length;
   
+      // Check if the dimensions allow for matrix multiplication
       if (numColsA !== numRowsB) {
+        // If dimensions do not match, display an alert and return
         return alert("Matrix dimensions do not properly match for cross-multiplication!")
         // throw new Error("Invalid matrix dimensions for multiplication.");
       }
       
+      // Initialize the result matrix with zeros
       const result = new Array(numRowsA);
       for (let i = 0; i < numRowsA; i++) {
         result[i] = new Array(numColsB).fill(0);
       }
-  
+       // Perform matrix multiplication
       for (let i = 0; i < numRowsA; i++) {
         for (let j = 0; j < numColsB; j++) {
+           // Calculate the element at position (i, j) of the result matrix
           for (let k = 0; k < numColsA; k++) {
             result[i][j] += matrixA[i][k] * matrixB[k][j];
           }
         }
       }
-      
+      // Create a new matrix to hold the result
       let resultMatrix = new Matrix(result.length, result[0].length)
       resultMatrix.array = result
+      // Return the resulting matrix
       return resultMatrix;
     }
   
@@ -249,7 +256,7 @@ class Matrix {
       return result
     }
 
-    // returns the determiant of a 2 by 2 matrix
+    // returns the determinant of a 2 by 2 matrix
   
     // determinant2x2 used to return the determinant (using the ad - bc formula)
     determinant2x2(matrix) {
@@ -284,13 +291,19 @@ class Matrix {
 
       // formula to determine determinant if matrix is > or equal to 3x3 size.
       for (let i = 0; i < n; i++) {
+        // Create a submatrix by excluding the i-th column and the first row
           const minorMatrix = [];
           for (let j = 1; j < n; j++) {
+            // Construct a row for the submatrix by excluding the i-th column
               const row = matrix[j].slice(0, i).concat(matrix[j].slice(i + 1));
+              // Add the constructed row to the submatrix
               minorMatrix.push(row);
           }
+          // Calculate the contribution of the current element to the determinant
+        // Multiply the element by the determinant of the submatrix and alternate the sign
           det += matrix[0][i] * this.determinant(minorMatrix) * Math.pow(-1, i);
       }
+       // Return the computed determinant
       return det;
     }
   }
@@ -340,19 +353,23 @@ class Matrix {
 
     /** Nullspace method converts the matrix into reduced row echelon form
      * from there it calculates nullspace 
-     * 
-     * 
      */
   
     nullSpace(matrix) {
+
+      // Import the 'numeric' library for linear algebra operations
       const numeric = require('numeric');
   
+      // Compute the row echelon form of the input matrix
       const rowEchelonForm = numeric.transpose(numeric.rref(matrix));
   
+      // Transform the row echelon form into row space by normalizing each row
       const rowSpace = numeric.transpose(rowEchelonForm).map(row => numeric.div(row, numeric.norm2(row)));
   
+      // Filter rows in the row space to find the null space (rows with norm 0)
       const nullSpace = rowSpace.filter(row => numeric.norm2(row) === 0);
   
+      // Return the computed null space
       return nullSpace;
       
     }
