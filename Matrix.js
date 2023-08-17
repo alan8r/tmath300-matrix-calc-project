@@ -48,7 +48,7 @@ class Matrix {
       
       // Check to make sure the matrix has a minimum of 1 row
       if (newRows < 1) {
-        console.error("array rows can not be smaller than 1")
+        alert("array rows can not be smaller than 1")
         return 0
       }
 
@@ -86,7 +86,7 @@ class Matrix {
       
       // Check to make sure the matrix is at least 1 column
       if (newCols < 1) {
-        console.error("array cols can not be smaller than 1")
+        alert("array cols can not be smaller than 1")
         return 0
       }
 
@@ -168,7 +168,7 @@ class Matrix {
       // First we check to see if the dimensions of both matrices we are operating on are matching
       // as required by the definition of matrix addition
       if (this.rows != matrix.rows && this.cols != matrix.cols) {
-        console.error("Cannot add matrices of different sizes")
+        alert("Cannot add matrices of different sizes")
         return
       }
 
@@ -184,7 +184,7 @@ class Matrix {
     subtract(matrix) {
       // check to see if rows/columns match
       if (this.rows != matrix.rows && this.cols != matrix.cols) {
-        console.error("Cannot add matrices of different sizes")
+        alert("Cannot add matrices of different sizes")
         return
       }
       // create a matrix to hold the result
@@ -297,11 +297,6 @@ class Matrix {
         false}
     }
   
-  
-    rank() {
-      //return the rank of the matrix
-    }
-  
     nullSpace(matrix) {
       const numeric = require('numeric');
   
@@ -316,9 +311,12 @@ class Matrix {
     }
   
     zeroArray() {
-      for (let i = 0; i < this.array.length; i++)
-        for (let j = 0; j < this.array[i].length; j++)
-          this.array[i][j] = 0
+      let confirmZero = confirm("Are you sure you want to change all matrix values to zero?")
+
+      if (confirmZero)
+        for (let i = 0; i < this.array.length; i++)
+          for (let j = 0; j < this.array[i].length; j++)
+            this.array[i][j] = 0
       
     }
   
