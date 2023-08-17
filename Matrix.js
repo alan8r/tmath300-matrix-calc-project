@@ -46,7 +46,7 @@ class Matrix {
     // A helper method for resizing the rows of the matrix when the user scales the size down
     resizeRows(newRows) {
       
-      // check to make sure the matrix has a minimum of 1 row
+      // Check to make sure the matrix has a minimum of 1 row
       if (newRows < 1) {
         console.error("array rows can not be smaller than 1")
         return 0
@@ -84,10 +84,19 @@ class Matrix {
     // A helper method similar to the resizeRows method above, but for changing the number of columns the matrix has
     resizeCols(newCols) {
       
+      // Check to make sure the matrix is at least 1 column
       if (newCols < 1) {
         console.error("array cols can not be smaller than 1")
         return 0
       }
+
+      /* 
+        There are effectively 2 cases for resizing the matrix columns
+          case 1: column count is decreasing
+          case 2: column count is increasing
+        The following if/elseif branch handles those two cases, as different actions are required to scale
+        the matrix larger or smaller
+      */
       if (newCols < this.cols) {
         for (let i = 0; i < this.rows; i++)
           for (let j = 0; j < (this.cols - newCols); j++)
@@ -99,10 +108,16 @@ class Matrix {
           }
         }
       }
+      
+      // update the object's column attribute variable to reflect the new column dimension
       this.cols = newCols
+
+      // returns 1 on success
       return 1
     }
-  
+    
+
+    // uses the above two helper methods to resize the matrix
     resizeMatrix(newRows, newCols) {
       
       console.log('##########')
@@ -110,22 +125,27 @@ class Matrix {
       console.log('~~~ before: '+this.rows+'x'+this.cols)
       console.log(this.toString())
       
+      // resize the actual rows and columns, the the methods run successfully then the variables will contain '1'
       let rowsSuccess = this.resizeRows(newRows)
       let colsSuccess = this.resizeCols(newCols)
-  
+      
+      // checks if the resizes were successful
       if (rowsSuccess && colsSuccess) {
-  
+        
+        // regenerate the HTML DOM table and update the reference within the object to the new instance
         if (this.tableDOM != null) {
           this.tableDOM.matrix = this;
           this.tableDOM.generateTableInnerStructure()
           this.tableDOM.refreshTable()
         }
-  
+        
+        
         console.log('~~~ after:  '+this.rows+'x'+this.cols)
         console.log(this.toString())
         console.log('##########')
       } else {
         console.error('matrix resize failed')
+        // return 0 if the method fails
         return 0
       }
     }
