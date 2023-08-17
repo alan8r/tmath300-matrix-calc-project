@@ -1,5 +1,6 @@
+// class representing matrix operatros
+
 class MatrixOpSelector {
-    
     options = [
         '[ + ]',
         '[ - ]',
@@ -13,6 +14,8 @@ class MatrixOpSelector {
         'rightMultiply',
         'leftMultiply'
     ]
+
+    // constructor that sets the elements of the matrix 
 
     constructor() {
         this.divContainer = document.createElement('div')
