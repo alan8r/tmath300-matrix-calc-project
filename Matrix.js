@@ -188,25 +188,37 @@ class Matrix {
       return result
     }
   
+    // determinant2x2 used to return the determinant (using the ad - bc formula)
     determinant2x2(matrix) {
       return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
   
+    /**
+     *The determinant method calculates a given matrix. 
+     *
+     */
   determinant(matrix) {
-    
+    //checks if matrix is square, since determinants cannot
+    // be retreived from a non nxn matrix.
     if (!this.isSquare()) {
       console.error("Can't get DET of non-square matrix")
       return
     }
 
+    // n = the nxn length of a matrix
     let n = matrix.length;
 
+    // if matrix is 1x1, return that number
     if (n === 1) {
         return matrix[0][0];
+
+        // if matrix is 2x2, use determinant2x2 method
     } else if (n === 2) {
         return this.determinant2x2(matrix);
     } else {
       let det = 0;
+
+      // formula to determine determinant if matrix is > or equal to 3x3 size.
       for (let i = 0; i < n; i++) {
           const minorMatrix = [];
           for (let j = 1; j < n; j++) {
@@ -265,6 +277,11 @@ class Matrix {
       //return the rank of the matrix
     }
   
+    /** Nullspace method converts the matrix into reduced row echelon form
+     * from there it calculates nullspace 
+     * 
+     * 
+     */
     nullSpace(matrix) {
       const numeric = require('numeric');
   
