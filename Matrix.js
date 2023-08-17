@@ -129,14 +129,20 @@ class Matrix {
         return 0
       }
     }
+
+    // gets the matrix elements
   
     getElemAt(indexRow, indexCol) {
       return this.array[indexCol-1][indexRow-1]
     }
+
+    // gets the matrix rows 
   
     getRows() {
       return this.rows
     }
+
+    // gets the matrix columns 
   
     getCols() {
       return this.cols
@@ -222,11 +228,15 @@ class Matrix {
       result.array = this.array[0].map((col, c) => this.array.map((row, r) => this.array[r][c]))
       return result
     }
+
+    // returns the determiant of a 2 by 2 matrix
   
     // determinant2x2 used to return the determinant (using the ad - bc formula)
     determinant2x2(matrix) {
       return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
     }
+
+    // returns the regualr determiant of a matrix 
   
     /**
      *The determinant method calculates the determinant a given matrix. 
@@ -286,6 +296,8 @@ class Matrix {
     }
     return (this.isSquare()) && (this.determinant(this.array)!=0)
   }
+
+  // tests and returns if a matrix is consistent 
   
   /**
    * @param {*} matrix (takes in a matrix)
@@ -304,11 +316,13 @@ class Matrix {
         false}
     }
   
+
     /** Nullspace method converts the matrix into reduced row echelon form
      * from there it calculates nullspace 
      * 
      * 
      */
+  
     nullSpace(matrix) {
       const numeric = require('numeric');
   
@@ -321,7 +335,10 @@ class Matrix {
       return nullSpace;
       
     }
-    // zeroArray method makes every element of the array/ matrix become zero.
+
+  
+    // Sets the rows and coulmns of a matrix to zero
+  
     zeroArray() {
       for (let i = 0; i < this.array.length; i++)
         for (let j = 0; j < this.array[i].length; j++)
@@ -329,13 +346,16 @@ class Matrix {
       
     }
 
-    //converts array to readable text.
+
+    // toString of the matrix
     toString() {
       let sb = ""
       this.array.forEach(row=>sb+=row.toString().split(',').join('\t')+'\n')
       return sb
     }
+
   
+    // creates a new matrix 
     generateMatrixTable(parentId) {
       this.tableDOM = new MatrixTable(this, parentId)
     }
