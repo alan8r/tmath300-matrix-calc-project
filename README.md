@@ -1,4 +1,3 @@
-
 # Matrix Calculator App
 
 Welcome to the Matrix Calculator App repository! This app is designed to help you perform various matrix operations and explore matrix properties. We've had an exciting journey building this app, and we're thrilled to share it with you.
@@ -29,13 +28,13 @@ During the development of this app, we had the opportunity to learn and grow:
 
 - Lwazi: Gained proficiency in UI design, Git, and matrix operations.
 - Michael: Enhanced skills in app interaction design and seamless function execution.
-- Alan: Strengthened backend development abilities and efficient data handling.
+- Alan: Strengthened frontend development abilities and object oriented programming principles.
 
 ## How to Use
 
-1. Clone this repository to your local machine.
-2. Open the app and explore various matrix functions.
-3. Use the user-friendly interface to perform matrix operations and analyze properties.
+1. Clone this repository or run from the GitHub deployment page linked above.
+2. Open the app and explore various matrix functions and properties.
+3. Use the user-friendly interface to perform matrix add, subtract and multiply operations and analyze properties of matrices.
 
 ## Technologies Used
 
